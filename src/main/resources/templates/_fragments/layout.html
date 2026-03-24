@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<!-- -->
+<!-- Fragment Head -->
+<!-- -->
+
+<head th:fragment="head(titre)">
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="icon" type="image/x-icon" th:href="@{/img/favicon.png}" />
+  <title th:text="(${! #strings.isEmpty(titre)} ?  ${titre} + ' - ' : '' ) + 'Hackathon'">Hackathon</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+  <script th:src="@{/lib/jquery/jquery.min.js}"></script>
+</head> <!-- Fin Fragment Head -->
+
+
+<body>
+
+  <!--  -->
+  <!-- Fragment En-tête de page - Barre de navigation -->
+  <!--  -->
+  <header th:fragment="header" class="sticky-top">
+
+    <!-- Barre de navigation -->
+    <nav class="p-0 navbar navbar-expand-md bg-dark navbar-dark">
+      <div class=" container-fluid">
+
+        <!-- Logo et nom du site -->
+        <a class="navbar-brand" th:href="@{/}">
+          <picture>
+            <source media="(max-width: 768px)" th:srcset="@{/img/logo-carre-28.png}">
+            <img class="img-fluid" th:src="@{/img/logo-carre-40.png}">
+          </picture>
+          <span style="color: white;">Hackathon</span>
+        </a>
+
+        <!-- Bouton menu -->
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu1">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Section escamotable de la barre de navigation -->
+        <div class="collapse navbar-collapse" id="menu1">
+
+          <!-- Partie gauche de la section escamotable -->
+          <ul class="navbar-nav">
+
+            <!-- Liste déroulante Gestion -->
+            <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
+              <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Gestion</a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a th:href="@{/compte/list}" class="dropdown-item">Comptes</a>
+                </li>
+              </ul>
+            </li> <!-- Fin Liste déroulante Gestion -->
+
+            <!-- Item de menu simple -->
+            <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+              <a th:href="@{/compte/list}" class="nav-link">Comptes</a>
+            </li>
+
+            <!-- Liste déroulante A Propos -->
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">A propos</a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a th:href="@{/}" class="dropdown-item">Accueil</a>
+                </li>
+                <li>
+                  <a th:href="@{/qui-sommes-nous}" class="dropdown-item">Qui sommes-nous ?</a>
+                </li>
+                <li>
+                  <a th:href="@{/mentions-legales}" class="dropdown-item">Mentions légales</a>
+                </li>
+              </ul>
+            </li> <!-- Fin Liste déroulante A Propos -->
+
+          </ul> <!-- Fin Partie gauche de la section escamotable -->
+
+          <!-- Partie droite de la section escamotable -->
+          <ul class=" navbar-nav ms-auto">
+
+            <!-- Liste déroulante Utilisateur -->
+            <li class="nav-item dropdown text-md-end" style="min-width: 8rem;">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                <i class="bi-person-circle">&nbsp;</i>
+                <span sec:authorize="isAuthenticated()" sec:authentication="name"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li sec:authorize="isAnonymous()">
+                  <a th:href="@{/connexion}" class="dropdown-item">Se connecter</a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                  <a th:href="@{/logout?continue}" class="dropdown-item">Déconnexion</a>
+                </li>
+              </ul>
+            </li> <!-- Fin Liste déroulante Utilisateur -->
+          </ul> <!-- Fin Partie droite de la section escamotable -->
+
+        </div> <!-- Fin Section escamotable de la barre de navigation -->
+
+      </div> <!-- Fin container-fluid -->
+    </nav> <!-- Fin Barre de navigation -->
+  </header> <!-- Fin Fragment En-tête de page - Barre de naviation -->
+
+
+  <!--  -->
+  <!-- Fragment Pied de page -->
+  <!--  -->
+  <footer th:fragment="footer" class="bg-secondary text-bg-dark py-4 text-center">
+    &copy; [[${#dates.format(#dates.createNow(), 'yyyy')}]] • Hackat'innov
+    <br><br>
+  </footer> <!-- Fin Fragment Pied de page -->
+
+
+  <!--  -->
+  <!-- Fragment Scripts définis dans le layout -->
+  <!--  -->
+  <th:block th:fragment="bottom-scripts">
+    <script th:src="@{/lib/bootstrap/bootstrap.bundle.min.js}"></script>
+  </th:block> <!-- Fin Fragment Scripts définis dans le layout -->
+
+</body>
+
+</html>

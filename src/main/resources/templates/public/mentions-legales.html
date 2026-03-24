@@ -1,0 +1,69 @@
+<!doctype html>
+<html th:with="tabTitle='Mentions légales'" lang="fr">
+
+<head th:replace="~{_fragments/layout :: head(${tabTitle})}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../static/css/styles.css" />
+</head>
+
+<body>
+
+  <!-- -->
+  <!-- En-tête de page - barre de navigation -->
+  <!-- -->
+  <header th:replace="~{_fragments/layout :: header }"></header>
+
+  <!-- -->
+  <!-- Contenu de la page -->
+  <!-- -->
+  <section class="container my-4">
+    <div class="row gy-4">
+
+      <!-- Colonne 1 -->
+      <div class=" col-12 col-md-6">
+
+        <!-- Titre en haut de la page -->
+        <h2 class="mb-4 text-center">Mentions légales</h2>
+
+        <!-- Ajustement en largeur -->
+        <div class="mt-lg-5 mx-auto" style="max-width: 22rem;">
+
+          <h3>Site</h3>
+          <ul>
+            <li>Hackathon</li>
+          </ul>
+          <h3>Propriétaire</h3>
+          <ul>
+            <li>Hackat&prime;innov</li>
+          </ul>
+          <h3>Hébergeur</h3>
+          <ul>
+            <li>3iL</li>
+            <li>43 Rue Sainte-Anne, 87000 Limoges</li>
+            <li>www.3il-ingenieurs.fr</li>
+          </ul>
+
+        </div> <!-- Fin Ajustement en largeur -->
+
+      </div> <!-- Fin Colonne 1 -->
+
+      <!-- Colonne 2, photo -->
+      <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
+        <img class="img-fluid" th:src="@{/img/logo.png}">
+      </div> <!-- Fin Colonne 2 -->
+
+    </div>
+  </section> <!-- Fin Contenu de la page -->
+
+  <!-- -->
+  <!-- Pied de page -->
+  <!-- -->
+  <footer th:replace="~{_fragments/layout :: footer}"></footer>
+
+  <!-- Scripts définis dans le layout -->
+  <th:block th:replace="~{_fragments/layout :: bottom-scripts}"></th:block>
+
+</body>
+
+</html>
