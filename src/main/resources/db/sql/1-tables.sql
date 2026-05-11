@@ -34,10 +34,16 @@ CREATE TABLE Mentor(
 
 CREATE TABLE Compte(
    id_compte INTEGER,
+<<<<<<< HEAD
    fonction VARCHAR(50)  NOT NULL,
    pseudo VARCHAR(50)  NOT NULL,
    email VARCHAR(50)  NOT NULL,
    role_admin VARCHAR(50)  NOT NULL,
+=======
+   pseudo VARCHAR(50)  NOT NULL,
+   email VARCHAR(50)  NOT NULL,
+   role_admin BOOLEAN NOT NULL,
+>>>>>>> dev
    empreinte_mdp VARCHAR(100)  NOT NULL,
    id_mentor INTEGER,
    PRIMARY KEY(id_compte),
@@ -115,7 +121,11 @@ CREATE TABLE Participant(
    FOREIGN KEY(id_Equipe) REFERENCES Equipe(id_Equipe)
 );
 
+<<<<<<< HEAD
 CREATE TABLE Possede(
+=======
+CREATE TABLE Avoir(
+>>>>>>> dev
    id_hack BIGINT,
    id_memstaf BIGINT,
    PRIMARY KEY(id_hack, id_memstaf),
