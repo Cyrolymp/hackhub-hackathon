@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HackHub</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar d-flex justify-content-between align-items-center">
+  <a href="#" class="brand">Hack<span>Hub</span></a>
+  <div class="d-flex align-items-center gap-3">
+    <span class="text-muted-nav" id="nav-status">Pas encore connecté</span>
+    <button class="btn-connect" id="nav-btn" onclick="openModal('modal-role')">
+      <i class="bi bi-person-fill"></i> Connexion
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container-fluid hero-container">
+    <div class="row align-items-center">
+      <div class="col-lg-7">
+        <div class="hero-badge"><i class="bi bi-lightning-charge-fill"></i> Plateforme ouverte & open source</div>
+        <h1 class="hero-title">Connecter les <span class="purple">talents</span><br>avec les meilleurs <span class="accent">hackathons</span></h1>
+        <p class="hero-sub">HackHub centralise l'offre et la demande de hackathons. Trouvez l'événement idéal, formez votre équipe et développez vos compétences dans un cadre structuré.</p>
+        <div class="hero-ctas">
+          <button class="btn-primary-hero" onclick="openModal('modal-role')"><i class="bi bi-rocket-takeoff-fill"></i> Commencer maintenant</button>
+          <button class="btn-ghost">Découvrir les événements</button>
+        </div>
+        <div class="stats-row">
+          <div class="stat-item"><div class="stat-num">240+</div><div class="stat-label">Hackathons actifs</div></div>
+          <div class="stat-item"><div class="stat-num">12K</div><div class="stat-label">Participants</div></div>
+          <div class="stat-item"><div class="stat-num">850+</div><div class="stat-label">Équipes formées</div></div>
+        </div>
+      </div>
+      <div class="col-lg-5 mt-4 mt-lg-0">
+        <div class="locked-banner">
+          <i class="bi bi-lock-fill"></i>
+          <h4>Contenu réservé aux membres</h4>
+          <p>Connectez-vous pour accéder aux hackathons, gérer votre profil et rejoindre une équipe.</p>
+          <button class="btn-primary-hero mt-3 mx-auto" onclick="openModal('modal-role')"><i class="bi bi-arrow-right-circle-fill"></i> Se connecter</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HACKATHON CARDS (locked) -->
+<section class="hack-section bg-dark2 border-top-primary">
+  <div class="section-container">
+    <h2 class="section-title">Hackathons à venir</h2>
+    <p class="section-sub">Aperçu public — connectez-vous pour voir les détails et vous inscrire</p>
+    <div class="row g-3">
+      <div class="col-md-4">
+        <div class="hack-card purple" style="position:relative;">
+          <div class="tag">IA & Machine Learning</div><h6>HackIA 2025 — Paris</h6><p class="org">Organisé par TechCorp France</p>
+          <div class="hack-meta"><span><i class="bi bi-calendar3"></i> 14 Fév 2025</span><span><i class="bi bi-people-fill"></i> 200 places</span></div>
+          <div class="blur-overlay" onclick="openModal('modal-role')"><span><i class="bi bi-lock-fill"></i> Voir les détails</span></div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="hack-card teal" style="position:relative;">
+          <div class="tag tag-teal">Web3 & Blockchain</div><h6>CryptoHack Lyon</h6><p class="org">Organisé par DecentLab</p>
+          <div class="hack-meta"><span><i class="bi bi-calendar3"></i> 28 Fév 2025</span><span><i class="bi bi-people-fill"></i> 120 places</span></div>
+          <div class="blur-overlay" onclick="openModal('modal-role')"><span><i class="bi bi-lock-fill"></i> Voir les détails</span></div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="hack-card amber" style="position:relative;">
+          <div class="tag tag-amber">Green Tech</div><h6>EcoHack Bordeaux</h6><p class="org">Organisé par GreenStartup</p>
+          <div class="hack-meta"><span><i class="bi bi-calendar3"></i> 07 Mar 2025</span><span><i class="bi bi-people-fill"></i> 80 places</span></div>
+          <div class="blur-overlay" onclick="openModal('modal-role')"><span><i class="bi bi-lock-fill"></i> Voir les détails</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="section-container">
+    <h2 class="section-title">Une plateforme complète</h2>
+    <p class="section-sub">Indeed pour la mise en relation, Moodle pour l'apprentissage</p>
+    <div class="row g-3">
+      <div class="col-md-6 col-lg-3"><div class="feature-card"><div class="feature-icon icon-purple"><i class="bi bi-calendar-event"></i></div><h5>Gestion d'événements</h5><p>Publiez et gérez vos hackathons sur un espace centralisé et standardisé.</p></div></div>
+      <div class="col-md-6 col-lg-3"><div class="feature-card"><div class="feature-icon icon-teal"><i class="bi bi-people"></i></div><h5>Formation d'équipes</h5><p>Créez ou rejoignez une équipe facilement grâce au système de code unique.</p></div></div>
+      <div class="col-md-6 col-lg-3"><div class="feature-card"><div class="feature-icon icon-amber"><i class="bi bi-mortarboard"></i></div><h5>Parcours pédagogique</h5><p>Structurez l'événement comme un parcours d'apprentissage encadré.</p></div></div>
+      <div class="col-md-6 col-lg-3"><div class="feature-card"><div class="feature-icon icon-pink"><i class="bi bi-person-badge"></i></div><h5>Profil permanent</h5><p>Un profil enrichi pour s'inscrire rapidement à plusieurs compétitions.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="brand" style="font-size:1.1rem;display:block;margin-bottom:0.5rem;">Hack<span>Hub</span></span>
+  <p>Plateforme open source de gestion de hackathons · 2025</p>
+</footer>
+
+
+<!-- ===================================================
+  MODAL 1 — CHOIX DU RÔLE
+=================================================== -->
+<div class="modal-overlay" id="modal-role">
+  <div class="modal-box">
+    <button class="btn-close-modal" onclick="closeAll()"><i class="bi bi-x-lg"></i></button>
+    <h4>Bienvenue sur HackHub</h4>
+    <p class="modal-sub">Choisissez votre profil pour continuer</p>
+    <div class="role-grid">
+      <div class="role-card" onclick="openModal('modal-participant-auth')">
+        <i class="bi bi-person-raised-hand" style="color:#a78bfa;"></i>
+        <span>Participant à un hackathon</span>
+      </div>
+      <div class="role-card" onclick="openModal('modal-org-login')">
+        <i class="bi bi-building" style="color:#60d4aa;"></i>
+        <span>Organisateur de hackathon</span>
+      </div>
+      <div class="role-card" onclick="alert('Module Juge — bientôt disponible !')">
+        <i class="bi bi-shield-check" style="color:#fbbf24;"></i>
+        <span>Juge</span>
+      </div>
+      <div class="role-card" onclick="alert('Module Admin — bientôt disponible !')">
+        <i class="bi bi-person-plus" style="color:#f472b6;"></i>
+        <span>Enregistrer un organisateur</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ===================================================
+  MODAL 2 — PARTICIPANT : CONNEXION / INSCRIPTION
+=================================================== -->
+<div class="modal-overlay" id="modal-participant-auth">
+  <div class="modal-box" style="max-width:500px;">
+    <button class="btn-close-modal" onclick="closeAll()"><i class="bi bi-x-lg"></i></button>
+    <button class="btn-back" onclick="goBack('modal-participant-auth','modal-role')"><i class="bi bi-arrow-left"></i> Retour</button>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Connexion</button>
+      <button class="auth-tab" id="tab-register" onclick="switchTab('register')">Inscription</button>
+    </div>
+
+    <!-- CONNEXION -->
+    <div id="form-login">
+      <p class="modal-sub mt-3">Connectez-vous à votre espace participant</p>
+      <label class="form-label">Email *</label>
+      <input class="form-control-dark" type="email" id="login-email" placeholder="marie@exemple.com">
+      <label class="form-label">Mot de passe *</label>
+      <div style="position:relative;">
+        <input class="form-control-dark" type="password" id="login-pwd" placeholder="••••••••" style="padding-right:3rem;">
+        <button class="btn-eye" onclick="togglePwd('login-pwd',this)"><i class="bi bi-eye"></i></button>
+      </div>
+      <div class="d-flex justify-content-end" style="margin-top:-0.5rem;margin-bottom:1rem;">
+        <a href="#" class="forgot-link">Mot de passe oublié ?</a>
+      </div>
+      <button class="btn-submit" onclick="loginParticipant()"><i class="bi bi-box-arrow-in-right me-2"></i>Se connecter</button>
+      <p class="switch-hint">Pas encore de compte ? <a href="#" onclick="switchTab('register')">S'inscrire</a></p>
+    </div>
+
+    <!-- INSCRIPTION -->
+    <div id="form-register" style="display:none;">
+      <p class="modal-sub mt-3">Créez votre profil participant HackHub</p>
+      <div class="row g-2">
+        <div class="col-6"><label class="form-label">Prénom *</label><input class="form-control-dark" type="text" id="reg-prenom" placeholder="Marie"></div>
+        <div class="col-6"><label class="form-label">Nom *</label><input class="form-control-dark" type="text" id="reg-nom" placeholder="Dupont"></div>
+      </div>
+      <label class="form-label">Email *</label>
+      <input class="form-control-dark" type="email" id="reg-email" placeholder="marie@exemple.com">
+      <label class="form-label">Spécialité</label>
+      <select class="form-control-dark" id="reg-specialite">
+        <option value="">— Votre domaine principal —</option>
+        <option>Développement Backend</option>
+        <option>Développement Frontend</option>
+        <option>IA / Machine Learning</option>
+        <option>Design UX/UI</option>
+        <option>Data Science</option>
+        <option>Cybersécurité</option>
+        <option>Autre</option>
+      </select>
+      <label class="form-label">Mot de passe *</label>
+      <div style="position:relative;">
+        <input class="form-control-dark" type="password" id="reg-pwd" placeholder="Minimum 8 caractères" style="padding-right:3rem;" oninput="checkStrength()">
+        <button class="btn-eye" onclick="togglePwd('reg-pwd',this)"><i class="bi bi-eye"></i></button>
+      </div>
+      <div class="pwd-strength-bar"><div id="pwd-strength-fill"></div></div>
+      <p class="pwd-strength-label" id="pwd-strength-label"></p>
+      <label class="form-label">Confirmer le mot de passe *</label>
+      <div style="position:relative;">
+        <input class="form-control-dark" type="password" id="reg-pwd2" placeholder="Répétez votre mot de passe" style="padding-right:3rem;">
+        <button class="btn-eye" onclick="togglePwd('reg-pwd2',this)"><i class="bi bi-eye"></i></button>
+      </div>
+      <button class="btn-submit" onclick="registerParticipant()"><i class="bi bi-person-check-fill me-2"></i>Créer mon compte</button>
+      <p class="switch-hint">Déjà inscrit ? <a href="#" onclick="switchTab('login')">Se connecter</a></p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ===================================================
+  MODAL 3 — CHOIX ÉQUIPE (après auth participant)
+=================================================== -->
+<div class="modal-overlay" id="modal-team-choice">
+  <div class="modal-box">
+    <button class="btn-close-modal" onclick="closeAll()"><i class="bi bi-x-lg"></i></button>
+    <h4>Bienvenue, <span id="welcome-name">Marie</span> 👋</h4>
+    <p class="modal-sub">Souhaitez-vous créer ou rejoindre une équipe pour participer à un hackathon ?</p>
+    <div class="team-choice">
+      <div class="team-btn" onclick="openTeamForm('create')">
+        <i class="bi bi-plus-circle-fill"></i>
+        <strong>Créer une équipe</strong>
+        <small>Devenez chef d'équipe</small>
+      </div>
+      <div class="team-btn" onclick="openTeamForm('join')">
+        <i class="bi bi-box-arrow-in-right"></i>
+        <strong>Rejoindre une équipe</strong>
+        <small>Entrez avec un code</small>
+      </div>
+    </div>
+    <hr class="divider">
+    <button class="btn-ghost w-100" style="padding:0.7rem;" onclick="goToDashboard()">
+      <i class="bi bi-grid me-2"></i>Accéder directement au tableau de bord
+    </button>
+  </div>
+</div>
+
+
+<!-- ===================================================
+  MODAL 4A — CRÉER UNE ÉQUIPE
+=================================================== -->
+<div class="modal-overlay" id="modal-create-team">
+  <div class="modal-box" style="max-width:520px;">
+    <button class="btn-close-modal" onclick="closeAll()"><i class="bi bi-x-lg"></i></button>
+    <button class="btn-back" onclick="goBack('modal-create-team','modal-team-choice')"><i class="bi bi-arrow-left"></i> Retour</button>
+    <h4>Créer votre équipe</h4>
+    <p class="modal-sub">Un code unique sera généré pour inviter vos coéquipiers</p>
+    <hr class="divider">
+    <label class="form-label">Nom de l'équipe *</label>
+    <input class="form-control-dark" type="text" placeholder="Ex : Les Codeurs Fous" id="teamName">
+    <label class="form-label">Spécialité principale</label>
+    <select class="form-control-dark" id="teamSpeciality">
+      <option value="">— Sélectionnez —</option>
+      <option>Développement Backend</option><option>Développement Frontend</option>
+      <option>IA / Machine Learning</option><option>Design UX/UI</option>
+      <option>Data Science</option><option>Cybersécurité</option><option>Autre</option>
+    </select>
+    <label class="form-label">Taille max de l'équipe</label>
+    <select class="form-control-dark" id="teamSize">
+      <option value="2">2 membres</option><option value="3">3 membres</option>
+      <option value="4" selected>4 membres</option><option value="5">5 membres</option><option value="6">6 membres</option>
+    </select>
+    <label class="form-label">Code de l'équipe *</label>
+    <div style="position:relative;">
+      <input class="form-control-dark code-field" type="text" id="teamCode" placeholder="TEAM-XXXX" maxlength="9" style="padding-right:3rem;">
+      <button onclick="generateCode()" class="btn-regen" title="Générer"><i class="bi bi-arrow-clockwise"></i></button>
+    </div>
+    <label class="form-label">Description (optionnel)</label>
+    <textarea class="form-control-dark" rows="2" placeholder="Ce que votre équipe apporte..." id="teamDesc" style="resize:none;"></textarea>
+    <button class="btn-submit" onclick="submitCreateTeam()"><i class="bi bi-rocket-takeoff-fill me-2"></i>Créer l'équipe</button>
+  </div>
+</div>
+
+
+<!-- ===================================================
+  MODAL 4B — REJOINDRE UNE ÉQUIPE
+=================================================== -->
+<div class="modal-overlay" id="modal-join-team">
+  <div class="modal-box">
+    <button class="btn-close-modal" onclick="closeAll()"><i class="bi bi-x-lg"></i></button>
+    <button class="btn-back" onclick="goBack('modal-join-team','modal-team-choice')"><i class="bi bi-arrow-left"></i> Retour</button>
+    <h4>Rejoindre une équipe</h4>
+    <p class="modal-sub">Entrez le code fourni par votre chef d'équipe</p>
+    <hr class="divider">
+    <label class="form-label">Code de l'équipe *</label>
+    <input class="form-control-dark code-field" type="text" placeholder="TEAM-XXXX" maxlength="9" id="joinCode">
+    <button class="btn-submit" onclick="submitJoinTeam()"><i class="bi bi-box-arrow-in-right me-2"></i>Rejoindre l'équipe</button>
+  </div>
+</div>
+
+
+<!-- ===================================================
+  MODAL 5 — ORGANISATEUR : CONNEXION UNIQUEMENT
+=================================================== -->
+<div class="modal-overlay" id="modal-org-login">
+  <div class="modal-box" style="max-width:460px;">
+    <button class="btn-close-modal" onclick="closeAll()"><i class="bi bi-x-lg"></i></button>
+    <button class="btn-back" onclick="goBack('modal-org-login','modal-role')"><i class="bi bi-arrow-left"></i> Retour</button>
+    <div class="org-login-header">
+      <div class="org-icon"><i class="bi bi-building"></i></div>
+      <h4>Espace Organisateur</h4>
+      <p class="modal-sub">Connectez-vous avec vos identifiants fournis par l'administrateur de la plateforme.</p>
+    </div>
+    <label class="form-label">Email organisateur *</label>
+    <input class="form-control-dark" type="email" id="org-email" placeholder="organisation@exemple.com">
+    <label class="form-label">Mot de passe *</label>
+    <div style="position:relative;">
+      <input class="form-control-dark" type="password" id="org-pwd" placeholder="••••••••" style="padding-right:3rem;">
+      <button class="btn-eye" onclick="togglePwd('org-pwd',this)"><i class="bi bi-eye"></i></button>
+    </div>
+    <div class="d-flex justify-content-end" style="margin-top:-0.5rem;margin-bottom:1rem;">
+      <a href="#" class="forgot-link">Mot de passe oublié ?</a>
+    </div>
+    <button class="btn-submit btn-teal" onclick="loginOrganisateur()"><i class="bi bi-box-arrow-in-right me-2"></i>Accéder à mon espace</button>
+    <div class="info-note mt-3">
+      <i class="bi bi-info-circle-fill"></i>
+      Pas encore enregistré ? Un administrateur doit d'abord créer votre compte organisateur via la section <strong>"Enregistrer un organisateur"</strong>.
+    </div>
+  </div>
+</div>
+
+
+<!-- ===================================================
+  MODAL SUCCESS
+=================================================== -->
+<div class="modal-overlay" id="modal-success">
+  <div class="modal-box">
+    <button class="btn-close-modal" onclick="closeAll()"><i class="bi bi-x-lg"></i></button>
+    <div class="success-box">
+      <div class="check"><i class="bi bi-check-lg"></i></div>
+      <h4 id="success-title">Équipe créée !</h4>
+      <p id="success-msg">Partagez ce code avec vos coéquipiers.</p>
+      <div class="code-display" id="success-code">TEAM-XXXX</div>
+      <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:1rem;">Copiez ce code et gardez-le précieusement</p>
+      <button class="btn-submit" onclick="goToDashboard()"><i class="bi bi-grid me-2"></i>Aller au tableau de bord</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
