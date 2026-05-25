@@ -118,6 +118,9 @@
       <a sec:authorize="isAnonymous()" th:href="@{/connexion}" class="sidebar-link" style="flex:1;">
         <i class="bi bi-box-arrow-in-right"></i> <span>Se connecter</span>
       </a>
+      <a sec:authorize="isAnonymous()" th:href="@{/inscription}" class="sidebar-link" style="flex:1;">
+        <i class="bi bi-person-plus-fill"></i> <span>S'inscrire</span>
+      </a>
     </div>
 
   </aside> <!-- Fin Fragment Sidebar -->
@@ -139,7 +142,11 @@
       <span sec:authorize="isAuthenticated()" class="text-muted-nav">
         <i class="bi bi-person-circle"></i> <span sec:authentication="name"></span>
       </span>
+      <a sec:authorize="isAuthenticated()" th:href="@{/logout?continue}" class="btn btn-sm btn-outline-secondary">
+        <i class="bi bi-box-arrow-right"></i> Déconnexion
+      </a>
       <a sec:authorize="isAnonymous()" th:href="@{/connexion}" class="btn btn-sm btn-primary">Connexion</a>
+      <a sec:authorize="isAnonymous()" th:href="@{/inscription}" class="btn btn-sm btn-outline-secondary">S'inscrire</a>
     </div>
   </header> <!-- Fin Fragment Topbar -->
 
