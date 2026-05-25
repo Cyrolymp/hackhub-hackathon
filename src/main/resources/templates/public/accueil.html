@@ -15,14 +15,37 @@
 
     <section class="content-section">
 
-      <div class="text-center my-4">
-        <h1>Bienvenue sur <span style="color:var(--hh-primary);">Hack</span>Hub</h1>
-        <p class="text-muted-nav">Trouvez un hackathon, formez votre équipe, relevez le défi.</p>
-        <div class="my-4">
-          <img class="img-fluid rounded" th:src="@{/img/hackathon.jpg}" style="max-width: 320px;">
+      <div class="hero">
+        <span class="hero-badge"><i class="bi bi-lightning-charge-fill"></i> Plateforme ouverte de hackathons</span>
+        <h1 class="hero-title">Connectez les <span class="purple">talents</span><br>aux meilleurs <span
+            class="accent">hackathons</span></h1>
+        <p class="hero-sub">HackHub centralise l'organisation des hackathons : trouvez un événement, formez votre
+          équipe, faites-vous noter par un jury et suivez le classement en temps réel.</p>
+
+        <div class="hero-ctas">
+          <a th:href="@{/hackathons}" class="btn btn-primary btn-lg"><i class="bi bi-rocket-takeoff-fill me-2"></i>Voir
+            les hackathons</a>
+          <a th:href="@{/classement}" class="btn btn-outline-light btn-lg"><i class="bi bi-trophy me-2"></i>Classement</a>
         </div>
-        <a th:href="@{/hackathons}" class="btn btn-primary">Voir les hackathons</a>
-        <a th:href="@{/classement}" class="btn btn-outline-secondary">Classement</a>
+
+        <div class="my-4">
+          <img class="hero-img" th:src="@{/img/hackathon.jpg}" alt="Hackathon">
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-item">
+            <div class="stat-num" th:text="${nbHackathons}">0</div>
+            <div class="stat-label">Hackathons</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num" th:text="${nbEquipes}">0</div>
+            <div class="stat-label">Équipes</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num" th:text="${nbParticipants}">0</div>
+            <div class="stat-label">Participants</div>
+          </div>
+        </div>
       </div>
 
     </section>

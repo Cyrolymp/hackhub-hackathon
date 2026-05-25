@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html th:with="tabTitle='Les hackathons'" lang="fr">
 
 <head th:replace="~{_fragments/layout :: head(${tabTitle})}">
@@ -11,33 +11,32 @@
 
   <main class="main-content">
 
-    <header th:replace="~{_fragments/layout :: topbar('Les hackathons', 'Tous les événements')}"></header>
+    <header th:replace="~{_fragments/layout :: topbar('Les hackathons', 'Découvrez tous les événements')}"></header>
 
     <section class="content-section">
 
       <div th:if="${hackathons.size() > 0}" class="row g-3">
-        <div class="col-12 col-md-6 col-lg-4" th:each="h : ${hackathons}">
-          <div class="card h-100">
-            <div class="card-body">
-              <h5 class="card-title" th:text="${h.nomHack}"></h5>
-              <h6 class="card-subtitle mb-3" th:text="${h.themeHach}"></h6>
-              <p class="card-text mb-1">
-                <i class="bi-geo-alt-fill"></i> <span th:text="${h.lieuHack}"></span>
-              </p>
-              <p class="card-text mb-1">
-                <i class="bi-calendar-event"></i>
-                <span th:text="${h.dateDeb}"></span> &rarr; <span th:text="${h.dateFin}"></span>
-              </p>
-              <p class="card-text mb-0" th:if="${h.contact}">
-                <i class="bi-envelope"></i> <span th:text="${h.contact}"></span>
-              </p>
+        <div class="col-12 col-md-6 col-lg-4" th:each="h,stat : ${hackathons}">
+          <div class="hack-card-dash"
+            th:classappend="${ {'c-purple','c-teal','c-amber','c-pink','c-blue'}[stat.index % 5] }">
+            <span class="hack-tag" th:text="${h.themeHach}">Thème</span>
+            <h6 th:text="${h.nomHack}">Nom</h6>
+            <div class="hack-org"><i class="bi bi-geo-alt-fill"></i> <span th:text="${h.lieuHack}">Lieu</span></div>
+            <div class="hack-card-meta">
+              <span class="meta-pill"><i class="bi bi-calendar-event"></i> <span th:text="${h.dateDeb}">début</span></span>
+              <span class="meta-pill"><i class="bi bi-calendar-check"></i> <span th:text="${h.dateFin}">fin</span></span>
             </div>
+            <span class="status-badge status-ouvert"><i class="bi bi-unlock-fill"></i> Inscriptions ouvertes</span>
+            <a th:href="@{/inscription}" class="btn btn-primary btn-sm mt-2 w-100">
+              <i class="bi bi-person-plus-fill me-1"></i> Participer</a>
           </div>
         </div>
       </div>
 
-      <div th:unless="${hackathons.size() > 0}" class="my-5 text-center fw-semibold">
-        <span>Aucun hackathon publié pour le moment.</span>
+      <div th:unless="${hackathons.size() > 0}" class="empty-state">
+        <i class="bi bi-calendar-x"></i>
+        <h3>Aucun hackathon</h3>
+        <p>Aucun hackathon n'est publié pour le moment. Revenez bientôt !</p>
       </div>
 
     </section>
