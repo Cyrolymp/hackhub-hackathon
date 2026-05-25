@@ -3,87 +3,48 @@
 
 <head th:replace="~{_fragments/layout :: head(${tabTitle})}">
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../../static/css/styles.css" />
 </head>
 
-<body>
+<body class="dashboard-body">
 
-  <!-- -->
-  <!-- En-tête de page - barre de navigation -->
-  <!-- -->
-  <header th:replace="~{_fragments/layout :: header }"></header>
+  <aside th:replace="~{_fragments/layout :: sidebar('qsn')}"></aside>
 
-  <!-- -->
-  <!-- Contenu de la page -->
-  <!-- -->
-  <section class="container my-3">
+  <main class="main-content">
 
-    <!-- Rubrique 1 -->
-    <div class="row gy-4">
+    <header th:replace="~{_fragments/layout :: topbar('Qui sommes-nous ?', '')}"></header>
 
-      <!-- Colonne 1 -->
-      <div class=" col-12 col-md-6 d-flex flex-column justify-content-center">
+    <section class="content-section">
 
-        <!-- Titre en haut de la page -->
-        <h2 class="mb-4 text-center">Qui sommes-nous ?</h2>
-
-        <!-- Ajustement en largeur -->
-        <div class="mt-lg-4 mx-auto" style="max-width: 26rem;">
-
-          <h3>Nos valeurs</h3>
-          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione dolore vero natus esse dolorum unde
-            tempore, alias
-            enim quae voluptates veritatis quo eveniet, repellendus nobis pariatur incidunt similique iste eius!</p>
-
-        </div> <!-- Fin Ajustement en largeur -->
-
-      </div> <!-- Fin Colonne 1 -->
-
-      <!-- Colonne 2, photo -->
-      <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
-        <div style=" max-width:25rem;">
-          <img class=" img-fluid " th:src="@{/img/logo.png}">
+      <div class="row gy-4">
+        <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
+          <div class="mx-auto" style="max-width: 26rem;">
+            <h3>Nos valeurs</h3>
+            <p>HackHub centralise l'offre et la demande de hackathons : trouver l'événement idéal,
+              former son équipe et développer ses compétences dans un cadre structuré.</p>
+          </div>
         </div>
-      </div> <!-- Fin Colonne 2 -->
-
-    </div> <!-- Fin Rubrique 1 -->
-
-    <!-- Rubrique 2 -->
-    <div class="row gy-4 mt-4">
-
-      <!-- Colonne 1 -->
-      <div class=" col-12 col-md-6 order-md-last d-flex flex-column justify-content-center">
-
-        <!-- Ajustement en largeur -->
-        <div class="mx-auto" style="max-width: 26rem;">
-
-          <h3 class="">Notre histoire</h3>
-          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione dolore vero natus esse dolorum unde
-            tempore, alias
-            enim quae voluptates veritatis quo eveniet, repellendus nobis pariatur incidunt similique iste eius!</p>
-
-        </div> <!-- Fin Ajustement en largeur -->
-
-      </div> <!-- Fin Colonne 1 -->
-
-      <!-- Colonne 2, photo -->
-      <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
-        <div style=" max-width:25rem;">
-          <img class="img-fluid" th:src="@{/img/logo.png}">
+        <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
+          <div style="max-width:25rem;"><img class="img-fluid" th:src="@{/img/logo.png}"></div>
         </div>
-      </div> <!-- Fin Colonne 2 -->
+      </div>
 
-    </div> <!-- Fin Rubrique 2 -->
+      <div class="row gy-4 mt-4">
+        <div class="col-12 col-md-6 order-md-last d-flex flex-column justify-content-center">
+          <div class="mx-auto" style="max-width: 26rem;">
+            <h3>Notre histoire</h3>
+            <p>Un projet né lors d'un hackathon étudiant, pensé pour relier participants, juges,
+              mentors, organisateurs et partenaires autour d'événements d'innovation.</p>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
+          <div style="max-width:25rem;"><img class="img-fluid" th:src="@{/img/logo.png}"></div>
+        </div>
+      </div>
 
-  </section> <!-- Fin Contenu de la page -->
+    </section>
 
-  <!-- -->
-  <!-- Pied de page -->
-  <!-- -->
-  <footer th:replace="~{_fragments/layout :: footer}"></footer>
+  </main>
 
-  <!-- Scripts définis dans le layout -->
   <th:block th:replace="~{_fragments/layout :: bottom-scripts}"></th:block>
 
 </body>

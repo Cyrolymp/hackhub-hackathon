@@ -3,112 +3,101 @@
 
 <head th:replace="~{_fragments/layout :: head(${tabTitle})}">
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../../static/css/styles.css" />
 </head>
 
-<body>
+<body class="dashboard-body">
 
-  <!-- -->
-  <!-- En-tête de page - barre de navigation -->
-  <!-- -->
-  <header th:replace="~{_fragments/layout :: header }"></header>
+  <aside th:replace="~{_fragments/layout :: sidebar('g-compte')}"></aside>
 
-  <!-- -->
-  <!-- Contenu de la page -->
-  <!-- -->
-  <section class="container my-4">
+  <main class="main-content">
 
-    <!-- Titre de la page -->
-    <h2 class="mb-4 text-center">Compte</h2>
+    <header th:replace="~{_fragments/layout :: topbar('Compte', 'Formulaire')}"></header>
 
-    <!-- Ajustement en largeur -->
-    <div class="mt-lg-5 mx-auto" style="max-width: 23rem;">
+    <section class="content-section">
 
-      <!-- Formulaire de saisie -->
-      <form th:action="@{/compte/form}" th:object="${item}" method="post">
+      <div class="mx-auto" style="max-width: 32rem;">
 
-        <!-- Champs cachés : id et empreinte du mot de pase -->
-        <input type="hidden" th:field="*{idCompte}">
-        <input type="hidden" th:field="*{empreinteMdp}">
+        <div class="card">
+          <div class="card-body">
 
-        <!-- Pseudo -->
-        <div class="row my-4">
-          <div class="col-12 col-xl-4">
-            <label for="pseudo" class="col-form-label">Pseudo *</label>
-          </div>
-          <div class="col">
-            <input type="text" th:field="*{pseudo}" required minlength="3" maxlength="25" autofocus
-              class="form-control">
-            <div th:errors="*{pseudo}" class="text-danger"></div>
+            <form th:action="@{/compte/form}" th:object="${item}" method="post">
+
+              <input type="hidden" th:field="*{idCompte}">
+              <input type="hidden" th:field="*{empreinteMdp}">
+
+              <!-- Pseudo -->
+              <div class="row my-3">
+                <div class="col-12 col-xl-4">
+                  <label for="pseudo" class="col-form-label">Pseudo *</label>
+                </div>
+                <div class="col">
+                  <input type="text" th:field="*{pseudo}" required minlength="3" maxlength="25" autofocus
+                    class="form-control">
+                  <div th:errors="*{pseudo}" class="text-danger"></div>
+                </div>
+              </div>
+
+              <!-- E-mail -->
+              <div class="row my-3">
+                <div class="col-12 col-xl-4">
+                  <label for="email" class="col-form-label">E-mail *</label>
+                </div>
+                <div class="col">
+                  <input type="email" th:field="*{email}" required maxlength="50" class="form-control">
+                  <div th:errors="*{email}" class="text-danger"></div>
+                </div>
+              </div>
+
+              <!-- Mot de passe -->
+              <div class="row my-3">
+                <div class="col-12 col-xl-4">
+                  <label for="motDePasse" class="col-form-label">Mot de passe
+                    <th:block th:text="*{#strings.isEmpty(empreinteMdp)}? ' *' :'' "></th:block>
+                  </label>
+                </div>
+                <div class="col">
+                  <div class="input-group">
+                    <input type="password" th:field="*{motDePasse}" th:required="*{#strings.isEmpty(empreinteMdp)}"
+                      minlength="3" maxlength="30" class="form-control">
+                    <button type="button" onclick="showHidehPassword()" class="input-group-text btn-link">
+                      <i id="eyeIcon" class="bi-eye"></i></button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Rôle Admin -->
+              <div class="row my-3">
+                <div class="col-4 col-xl-4">
+                  <label for="roleAdmin" class="form-check-label">Rôle Admin</label>
+                </div>
+                <div class="col">
+                  <div class="form-check">
+                    <input type="checkbox" id="roleAdmin" th:field="*{roleAdmin}" class="form-check-input">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Boutons -->
+              <div class="mt-4 text-center">
+                <input type="submit" class="btn btn-primary" value="Valider">
+                <a th:href="@{/compte/list}" class="btn btn-outline-secondary">Fermer</a>
+              </div>
+
+            </form>
+
           </div>
         </div>
 
-        <!-- E-mail -->
-        <div class="row my-4">
-          <div class="col-12 col-xl-4">
-            <label for="email" class="col-form-label">E-mail *</label>
-          </div>
-          <div class="col">
-            <input type="email" th:field="*{email}" required maxlength="50" class="form-control">
-            <div th:errors="*{email}" class="text-danger"></div>
-          </div>
-        </div>
+      </div>
 
-        <!-- Mot de passe -->
-        <div class="row my-4">
-          <div class="col-12 col-xl-4">
-            <label for="motDePasse" class="col-form-label">Mot de passe
-              <th:block th:text="*{#strings.isEmpty(empreinteMdp)}? ' *' :'' ">
-              </th:block>
-            </label>
-          </div>
-          <div class="col">
-            <div class="input-group">
-              <input type="password" th:field="*{motDePasse}" th:required="*{#strings.isEmpty(empreinteMdp)}"
-                minlength="3" maxlength="30" class="form-control">
-              <button type="button" onclick="showHidehPassword()" class="input-group-text btn-link">
-                <i id="eyeIcon" class="bi-eye"></i></button>
-            </div>
-          </div>
-        </div>
+    </section>
 
-        <!-- Rôle Admin -->
-        <div class="row my-4">
-          <div class="col-4 col-xl-4">
-            <label for="roleAdmin" class="form-check-label">Rôle Admin</label>
-          </div>
-          <div class="col">
-            <div class="form-check">
-              <input type="checkbox" id="roleAdmin" th:field="*{roleAdmin}" class="form-check-input">
-            </div>
-          </div>
-        </div>
+  </main>
 
-        <!-- Boutons en bas du formulaire -->
-        <div class="mt-4 text-center">
-          <input type="submit" class="btn btn-primary" value="Valider">
-          <a th:href="@{/compte/list}" class="btn btn-outline-secondary">Fermer </a>
-        </div>
-
-      </form> <!-- Fin Formulaire de saisie -->
-
-    </div> <!-- Fin Ajustement en largeur -->
-
-  </section> <!-- Fin Contenu de la page -->
-
-  <!-- Message d'alerte -->
   <div th:replace="~{_fragments/component :: alert}"></div>
 
-  <!-- -->
-  <!-- Pied de page -->
-  <!-- -->
-  <footer th:replace="~{_fragments/layout :: footer}"></footer>
-
-  <!-- Scripts définis dans le layout -->
   <th:block th:replace="~{_fragments/layout :: bottom-scripts}"></th:block>
 
-  <!-- Scripts spécifiques à cette page -->
   <script>
     function showHidehPassword() {
       var input = $('#motDePasse')

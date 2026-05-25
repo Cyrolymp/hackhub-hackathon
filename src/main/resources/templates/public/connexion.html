@@ -3,96 +3,78 @@
 
 <head th:replace="~{_fragments/layout :: head(${tabTitle})}">
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../../static/css/styles.css" />
 </head>
 
-<body>
+<body class="dashboard-body">
 
-  <!-- -->
-  <!-- En-tête de page - barre de navigation -->
-  <!-- -->
-  <header th:replace="~{_fragments/layout :: header }"></header>
+  <aside th:replace="~{_fragments/layout :: sidebar('')}"></aside>
 
-  <!-- -->
-  <!-- Contenu de la page -->
-  <!-- -->
-  <section class="container my-3">
+  <main class="main-content">
 
-    <!-- Titre en haut de la page -->
-    <h2 class="text-center">Connexion</h2>
+    <header th:replace="~{_fragments/layout :: topbar('Connexion', 'Accédez à votre espace')}"></header>
 
-    <!-- Espacement vertical -->
-    <div class="py-2 py-lg-4"></div>
+    <section class="content-section">
 
-    <!-- Ajustement en largeur -->
-    <div class="mx-auto" style="max-width: 30rem;">
+      <div class="card mx-auto" style="max-width: 30rem;">
+        <div class="card-body">
 
-      <!-- Formulaire de saisie -->
-      <form class="mb-auto" th:action="@{/login}" method="post">
+          <form class="mb-auto" th:action="@{/login}" method="post">
 
-        <!-- E-mail ou pseudo -->
-        <div class="row my-2">
-          <div class="col-12 col-xl-5">
-            <label for="username" class="form-label">E-mail (ou&nbsp;pesudo)</label>
-          </div>
-          <div class="col">
-            <input type="text" id="username" name="username" required autofocus class="form-control">
-          </div>
-        </div>
-
-        <!-- Mot de passe -->
-        <div class="row my-2">
-          <div class="col-12 col-xl-5">
-            <label for="password" class="col-form-label">Mot de passe</label>
-          </div>
-          <div class="col">
-            <div class="input-group">
-              <div class="input-group">
-                <input type="password" id="password" th:value="${password}" class="form-control" name="password"
-                  required></input>
-                <button type="button" class="input-group-text btn-link" onclick="showHidehPassword()">
-                  <i id="eyeIcon" class="bi-eye"></i> </button>
+            <!-- E-mail ou pseudo -->
+            <div class="row my-2">
+              <div class="col-12 col-xl-5">
+                <label for="username" class="form-label">E-mail (ou&nbsp;pseudo)</label>
+              </div>
+              <div class="col">
+                <input type="text" id="username" name="username" required autofocus class="form-control">
               </div>
             </div>
-          </div>
-        </div>
 
-        <!-- Se souvenir de moi -->
-        <div class="row my-3">
-          <div class="col-6 col-xl-5">
-            <label for="remember-me" class="form-check-label">Se souvenir de moi</label>
-          </div>
-          <div class="col">
-            <div class="form-check">
-              <input type="checkbox" id="remember-me" class="form-check-input" name="remember-me">
+            <!-- Mot de passe -->
+            <div class="row my-2">
+              <div class="col-12 col-xl-5">
+                <label for="password" class="col-form-label">Mot de passe</label>
+              </div>
+              <div class="col">
+                <div class="input-group">
+                  <input type="password" id="password" th:value="${password}" class="form-control" name="password"
+                    required>
+                  <button type="button" class="input-group-text btn-link" onclick="showHidehPassword()">
+                    <i id="eyeIcon" class="bi-eye"></i></button>
+                </div>
+              </div>
             </div>
-          </div>
+
+            <!-- Se souvenir de moi -->
+            <div class="row my-3">
+              <div class="col-6 col-xl-5">
+                <label for="remember-me" class="form-check-label">Se souvenir de moi</label>
+              </div>
+              <div class="col">
+                <div class="form-check">
+                  <input type="checkbox" id="remember-me" class="form-check-input" name="remember-me">
+                </div>
+              </div>
+            </div>
+
+            <!-- Bouton -->
+            <div class="text-center mt-4">
+              <input type="submit" class="btn btn-primary" value="Se connecter">
+            </div>
+
+          </form>
+
         </div>
+      </div>
 
-        <!-- Boutons en bas du formulaire -->
-        <div class="text-center mt-4 mt-xl-5 mb-5">
-          <input type="submit" class="btn btn-primary" value="Se connecter">
-        </div>
+    </section>
 
-      </form> <!-- Fin Formulaire de saisie -->
+  </main>
 
-    </div> <!-- Fin Ajustement en largeur -->
-
-  </section> <!-- Fin Contenu de la page -->
-
-  <!-- Message d'alerte -->
   <div th:replace="~{_fragments/component :: alert}"></div>
 
-  <!-- -->
-  <!-- Pied de page -->
-  <!-- -->
-  <footer th:replace="~{_fragments/layout :: footer}"></footer>
-
-  <!-- Scripts définis dans le layout -->
   <th:block th:replace="~{_fragments/layout :: bottom-scripts}"></th:block>
 
-  <!-- Scripts spécifiques à cette page -->
   <script>
     function showHidehPassword() {
       var input = $('#password')

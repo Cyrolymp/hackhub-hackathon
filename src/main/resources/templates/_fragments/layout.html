@@ -13,7 +13,10 @@
 
   <link rel="icon" type="image/x-icon" th:href="@{/img/favicon.png}" />
   <title th:text="(${! #strings.isEmpty(titre)} ?  ${titre} + ' - ' : '' ) + 'Hackathon'">Hackathon</title>
+  <!-- Active le thème sombre Bootstrap 5.3 dès le chargement (charte HackHub) -->
+  <script>document.documentElement.setAttribute('data-bs-theme', 'dark');</script>
   <link rel="stylesheet" th:href="@{/css/styles.css}" />
+  <link rel="stylesheet" th:href="@{/css/hackhub.css}" />
   <script th:src="@{/lib/jquery/jquery.min.js}"></script>
 </head> <!-- Fin Fragment Head -->
 
@@ -21,92 +24,124 @@
 <body>
 
   <!--  -->
-  <!-- Fragment En-tête de page - Barre de navigation -->
+  <!-- Fragment Sidebar (menu vertical) -->
   <!--  -->
-  <header th:fragment="header" class="sticky-top">
+  <aside th:fragment="sidebar(active)" class="sidebar" id="sidebar">
 
-    <!-- Barre de navigation -->
-    <nav class="p-0 navbar navbar-expand-md bg-dark navbar-dark">
-      <div class=" container-fluid">
+    <a class="sidebar-brand text-decoration-none d-block" th:href="@{/}">Hack<span>Hub</span></a>
 
-        <!-- Logo et nom du site -->
-        <a class="navbar-brand" th:href="@{/}">
-          <picture>
-            <source media="(max-width: 768px)" th:srcset="@{/img/logo-carre-28.png}">
-            <img class="img-fluid" th:src="@{/img/logo-carre-40.png}">
-          </picture>
-          <span style="color: white;">Hackathon</span>
-        </a>
+    <nav class="sidebar-nav">
 
-        <!-- Bouton menu -->
-        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu1">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+      <a th:href="@{/hackathons}" class="sidebar-link" th:classappend="${active == 'hackathons'} ? 'active'">
+        <i class="bi bi-grid-1x2-fill"></i> <span>Hackathons</span>
+      </a>
+      <a th:href="@{/classement}" class="sidebar-link" th:classappend="${active == 'classement'} ? 'active'">
+        <i class="bi bi-trophy-fill"></i> <span>Classement</span>
+      </a>
+      <a sec:authorize="hasAnyRole('ADMIN','JUGE')" th:href="@{/notation}" class="sidebar-link"
+        th:classappend="${active == 'notation'} ? 'active'">
+        <i class="bi bi-star-fill"></i> <span>Notation</span>
+      </a>
 
-        <!-- Section escamotable de la barre de navigation -->
-        <div class="collapse navbar-collapse" id="menu1">
+      <!-- Gestion (organisateurs et admins) -->
+      <div sec:authorize="hasAnyRole('ADMIN','ORGANISATEUR')" class="sidebar-heading">Gestion</div>
+      <a sec:authorize="hasAnyRole('ADMIN','ORGANISATEUR')" th:href="@{/hackathon/list}" class="sidebar-link"
+        th:classappend="${active == 'g-hackathon'} ? 'active'">
+        <i class="bi bi-calendar-event"></i> <span>Hackathons</span>
+      </a>
+      <a sec:authorize="hasAnyRole('ADMIN','ORGANISATEUR')" th:href="@{/equipe/list}" class="sidebar-link"
+        th:classappend="${active == 'g-equipe'} ? 'active'">
+        <i class="bi bi-people-fill"></i> <span>Équipes</span>
+      </a>
+      <a sec:authorize="hasAnyRole('ADMIN','ORGANISATEUR')" th:href="@{/participant/list}" class="sidebar-link"
+        th:classappend="${active == 'g-participant'} ? 'active'">
+        <i class="bi bi-person-lines-fill"></i> <span>Participants</span>
+      </a>
+      <a sec:authorize="hasAnyRole('ADMIN','ORGANISATEUR')" th:href="@{/epreuve/list}" class="sidebar-link"
+        th:classappend="${active == 'g-epreuve'} ? 'active'">
+        <i class="bi bi-flag-fill"></i> <span>Épreuves</span>
+      </a>
+      <a sec:authorize="hasAnyRole('ADMIN','ORGANISATEUR')" th:href="@{/recompense/list}" class="sidebar-link"
+        th:classappend="${active == 'g-recompense'} ? 'active'">
+        <i class="bi bi-award-fill"></i> <span>Récompenses</span>
+      </a>
 
-          <!-- Partie gauche de la section escamotable -->
-          <ul class="navbar-nav">
+      <!-- Administration (admins) -->
+      <div sec:authorize="hasRole('ADMIN')" class="sidebar-heading">Administration</div>
+      <a sec:authorize="hasRole('ADMIN')" th:href="@{/juge/list}" class="sidebar-link"
+        th:classappend="${active == 'g-juge'} ? 'active'">
+        <i class="bi bi-clipboard-check-fill"></i> <span>Juges</span>
+      </a>
+      <a sec:authorize="hasRole('ADMIN')" th:href="@{/mentor/list}" class="sidebar-link"
+        th:classappend="${active == 'g-mentor'} ? 'active'">
+        <i class="bi bi-lightbulb-fill"></i> <span>Mentors</span>
+      </a>
+      <a sec:authorize="hasRole('ADMIN')" th:href="@{/organisateur/list}" class="sidebar-link"
+        th:classappend="${active == 'g-organisateur'} ? 'active'">
+        <i class="bi bi-building"></i> <span>Organisateurs</span>
+      </a>
+      <a sec:authorize="hasRole('ADMIN')" th:href="@{/partenaire/list}" class="sidebar-link"
+        th:classappend="${active == 'g-partenaire'} ? 'active'">
+        <i class="bi bi-people"></i> <span>Partenaires</span>
+      </a>
+      <a sec:authorize="hasRole('ADMIN')" th:href="@{/membrestaff/list}" class="sidebar-link"
+        th:classappend="${active == 'g-staff'} ? 'active'">
+        <i class="bi bi-person-badge-fill"></i> <span>Staff</span>
+      </a>
+      <a sec:authorize="hasRole('ADMIN')" th:href="@{/compte/list}" class="sidebar-link"
+        th:classappend="${active == 'g-compte'} ? 'active'">
+        <i class="bi bi-shield-lock-fill"></i> <span>Comptes</span>
+      </a>
 
-            <!-- Liste déroulante Gestion -->
-            <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
-              <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Gestion</a>
-              <ul class="dropdown-menu">
-                <li>
-                  <a th:href="@{/compte/list}" class="dropdown-item">Comptes</a>
-                </li>
-              </ul>
-            </li> <!-- Fin Liste déroulante Gestion -->
+      <!-- À propos -->
+      <div class="sidebar-heading">À propos</div>
+      <a th:href="@{/qui-sommes-nous}" class="sidebar-link" th:classappend="${active == 'qsn'} ? 'active'">
+        <i class="bi bi-info-circle-fill"></i> <span>Qui sommes-nous</span>
+      </a>
+      <a th:href="@{/mentions-legales}" class="sidebar-link" th:classappend="${active == 'ml'} ? 'active'">
+        <i class="bi bi-file-text-fill"></i> <span>Mentions légales</span>
+      </a>
 
-            <!-- Item de menu simple -->
-            <li class="nav-item" sec:authorize="hasRole('ADMIN')">
-              <a th:href="@{/compte/list}" class="nav-link">Comptes</a>
-            </li>
+    </nav>
 
-            <!-- Liste déroulante A Propos -->
-            <li class="nav-item dropdown">
-              <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">A propos</a>
-              <ul class="dropdown-menu">
-                <li>
-                  <a th:href="@{/}" class="dropdown-item">Accueil</a>
-                </li>
-                <li>
-                  <a th:href="@{/qui-sommes-nous}" class="dropdown-item">Qui sommes-nous ?</a>
-                </li>
-                <li>
-                  <a th:href="@{/mentions-legales}" class="dropdown-item">Mentions légales</a>
-                </li>
-              </ul>
-            </li> <!-- Fin Liste déroulante A Propos -->
+    <div class="sidebar-footer">
+      <div sec:authorize="isAuthenticated()" class="sidebar-user">
+        <div class="user-avatar"><i class="bi bi-person-fill"></i></div>
+        <div class="text-truncate">
+          <div class="user-name" sec:authentication="name">Utilisateur</div>
+          <div class="user-role">Connecté</div>
+        </div>
+      </div>
+      <a sec:authorize="isAuthenticated()" th:href="@{/logout?continue}" class="btn-logout" title="Déconnexion">
+        <i class="bi bi-box-arrow-right"></i>
+      </a>
+      <a sec:authorize="isAnonymous()" th:href="@{/connexion}" class="sidebar-link" style="flex:1;">
+        <i class="bi bi-box-arrow-in-right"></i> <span>Se connecter</span>
+      </a>
+    </div>
 
-          </ul> <!-- Fin Partie gauche de la section escamotable -->
+  </aside> <!-- Fin Fragment Sidebar -->
 
-          <!-- Partie droite de la section escamotable -->
-          <ul class=" navbar-nav ms-auto">
 
-            <!-- Liste déroulante Utilisateur -->
-            <li class="nav-item dropdown text-md-end" style="min-width: 8rem;">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                <i class="bi-person-circle">&nbsp;</i>
-                <span sec:authorize="isAuthenticated()" sec:authentication="name"></span>
-              </a>
-              <ul class="dropdown-menu">
-                <li sec:authorize="isAnonymous()">
-                  <a th:href="@{/connexion}" class="dropdown-item">Se connecter</a>
-                </li>
-                <li sec:authorize="isAuthenticated()">
-                  <a th:href="@{/logout?continue}" class="dropdown-item">Déconnexion</a>
-                </li>
-              </ul>
-            </li> <!-- Fin Liste déroulante Utilisateur -->
-          </ul> <!-- Fin Partie droite de la section escamotable -->
-
-        </div> <!-- Fin Section escamotable de la barre de navigation -->
-
-      </div> <!-- Fin container-fluid -->
-    </nav> <!-- Fin Barre de navigation -->
-  </header> <!-- Fin Fragment En-tête de page - Barre de naviation -->
+  <!--  -->
+  <!-- Fragment Topbar (barre supérieure) -->
+  <!--  -->
+  <header th:fragment="topbar(titre, sousTitre)" class="topbar">
+    <div class="topbar-left">
+      <button type="button" class="sidebar-toggle" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+      <div>
+        <h1 class="page-title" th:text="${titre}">Titre</h1>
+        <p class="page-sub" th:if="${sousTitre != null and !#strings.isEmpty(sousTitre)}" th:text="${sousTitre}">
+          Sous-titre</p>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <span sec:authorize="isAuthenticated()" class="text-muted-nav">
+        <i class="bi bi-person-circle"></i> <span sec:authentication="name"></span>
+      </span>
+      <a sec:authorize="isAnonymous()" th:href="@{/connexion}" class="btn btn-sm btn-primary">Connexion</a>
+    </div>
+  </header> <!-- Fin Fragment Topbar -->
 
 
   <!--  -->
@@ -123,6 +158,19 @@
   <!--  -->
   <th:block th:fragment="bottom-scripts">
     <script th:src="@{/lib/bootstrap/bootstrap.bundle.min.js}"></script>
+    <script>
+      // Ouverture/fermeture de la barre latérale
+      function toggleSidebar() {
+        var sidebar = document.getElementById('sidebar');
+        var main = document.querySelector('.main-content');
+        if (window.innerWidth >= 768) {
+          sidebar.classList.toggle('collapsed');
+          if (main) main.classList.toggle('expanded');
+        } else {
+          sidebar.classList.toggle('open');
+        }
+      }
+    </script>
   </th:block> <!-- Fin Fragment Scripts définis dans le layout -->
 
 </body>

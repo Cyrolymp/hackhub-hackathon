@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html th:with="tabTitle='Page introuvable'" lang="fr">
+
+<head th:replace="~{_fragments/layout :: head(${tabTitle})}">
+  <meta charset="UTF-8">
+</head>
+
+<body class="dashboard-body">
+
+  <aside th:replace="~{_fragments/layout :: sidebar('')}"></aside>
+
+  <main class="main-content">
+
+    <header th:replace="~{_fragments/layout :: topbar('Page introuvable', '')}"></header>
+
+    <section class="content-section">
+      <div class="text-center my-5">
+        <h1 class="display-1 fw-bold">404</h1>
+        <p class="fs-4">Cette page n'existe pas.</p>
+        <a th:href="@{/}" class="btn btn-primary mt-3">Retour à l'accueil</a>
+      </div>
+    </section>
+
+  </main>
+
+  <th:block th:replace="~{_fragments/layout :: bottom-scripts}"></th:block>
+
+</body>
+
+</html>

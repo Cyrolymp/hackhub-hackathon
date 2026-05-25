@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html th:with="tabTitle='Notation'" lang="fr">
+
+<head th:replace="~{_fragments/layout :: head(${tabTitle})}">
+  <meta charset="UTF-8">
+</head>
+
+<body class="dashboard-body">
+
+  <aside th:replace="~{_fragments/layout :: sidebar('notation')}"></aside>
+
+  <main class="main-content">
+
+    <header th:replace="~{_fragments/layout :: topbar('Notation des équipes', 'Saisie et suivi des notes')}"></header>
+
+    <section class="content-section">
+
+      <!-- Formulaire de saisie d'une note -->
+      <div class="card mx-auto mb-4" style="max-width: 42rem;">
+        <div class="card-body">
+          <form th:action="@{/notation}" method="post" class="row g-2 align-items-end">
+            <div class="col-12 col-md-4">
+              <label class="form-label">Juge</label>
+              <select name="idJuge" class="form-select" required>
+                <option value="">-- Choisir --</option>
+                <option th:each="j : ${juges}" th:value="${j.idJuge}" th:text="${j.nomJuge}"></option>
+              </select>
+            </div>
+            <div class="col-12 col-md-4">
+              <label class="form-label">Équipe</label>
+              <select name="idEquipe" class="form-select" required>
+                <option value="">-- Choisir --</option>
+                <option th:each="e : ${equipes}" th:value="${e.idEquipe}" th:text="${e.nomEquipe}"></option>
+              </select>
+            </div>
+            <div class="col-8 col-md-2">
+              <label class="form-label">Note /20</label>
+              <input type="number" name="note" step="0.01" min="0" max="20" required class="form-control">
+            </div>
+            <div class="col-4 col-md-2">
+              <button type="submit" class="btn btn-primary w-100">Noter</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Tableau des notes existantes -->
+      <div class="mx-auto" style="max-width: 42rem;">
+        <h5 class="text-center mb-3">Notes enregistrées</h5>
+        <table th:if="${notes.size() > 0}" class="table table-sm table-hover table-striped align-middle">
+          <thead class="table-dark">
+            <tr>
+              <th>Équipe</th>
+              <th>Juge</th>
+              <th class="text-end">Note</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="n : ${notes}">
+              <td th:text="${n.nomEquipe}"></td>
+              <td th:text="${n.nomJuge}"></td>
+              <td class="text-end" th:text="${#numbers.formatDecimal(n.note, 1, 2)}"></td>
+            </tr>
+          </tbody>
+        </table>
+        <div th:unless="${notes.size() > 0}" class="my-4 text-center fw-semibold">
+          <span>Aucune note enregistrée pour le moment.</span>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <div th:replace="~{_fragments/component :: alert}"></div>
+
+  <th:block th:replace="~{_fragments/layout :: bottom-scripts}"></th:block>
+
+</body>
+
+</html>

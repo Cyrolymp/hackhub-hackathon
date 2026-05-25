@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html th:with="tabTitle='Équipes'" lang="fr">
+
+<head th:replace="~{_fragments/layout :: head(${tabTitle}) }">
+  <meta charset="UTF-8">
+</head>
+
+<body class="dashboard-body">
+
+  <aside th:replace="~{_fragments/layout :: sidebar('g-equipe')}"></aside>
+
+  <main class="main-content">
+
+    <header th:replace="~{_fragments/layout :: topbar('Équipes', 'Liste et gestion')}"></header>
+
+    <section class="content-section">
+
+      <div class="mx-auto" style="max-width: 62rem;">
+
+        <div th:replace="~{_fragments/component :: list_control_panel( @{/equipe/form}, 'pagingEquipe' ) }"></div>
+
+        <div id="async_content">
+
+          <div th:if="${list.size() > 0}">
+
+            <table class="mt-2 mb-3 mx-auto table table-sm table-hover table-striped align-middle">
+              <thead class="table-dark">
+                <tr class="align-middle">
+                  <th>Nom</th>
+                  <th>Chef</th>
+                  <th>Code</th>
+                  <th>ID Hackathon</th>
+                  <th>ID Épreuve</th>
+                  <th class="text-center">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="align-middle">
+                <tr th:each="item:${list}" th:object="${item}">
+                  <td th:text="*{nomEquipe}"></td>
+                  <td th:text="*{nomChef}"></td>
+                  <td th:text="*{codeEquipe}"></td>
+                  <td th:text="*{idHack}"></td>
+                  <td th:text="*{idEpreuve}"></td>
+                  <td class="py-0 text-center" style="font-size: 1.2rem;">
+                    <a title="Modifier" th:href="@{/equipe/form(id=*{idEquipe})}"
+                      class="text-secondary bi-pencil-square"></a>&nbsp;
+                    <a title="Supprimer" th:data-id="*{idEquipe}" th:data-name="*{nomEquipe}"
+                      onclick="confirm_delete(this)" class="text-secondary bi-trash3" style="cursor:pointer;"></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div th:replace="~{ _fragments/component :: paging_navbar( @{/equipe/list/content}, 'pagingEquipe', '#async_content', true ) }"></div>
+
+          </div>
+
+          <div th:unless="${list.size() > 0}" class="my-5 text-center fw-semibold">
+            <span>Aucun élément trouvé !</span>
+          </div>
+
+          <div th:replace="~{_fragments/component :: alert}"></div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <div th:replace="~{ _fragments/component :: confirm_delete(@{/equipe/delete}, '#async_content' ) }"></div>
+
+  <th:block th:replace="~{_fragments/layout :: bottom-scripts}"></th:block>
+
+</body>
+
+</html>
