@@ -32,6 +32,9 @@
 
     <nav class="sidebar-nav">
 
+      <a th:href="@{/dashboard}" class="sidebar-link" th:classappend="${active == 'dashboard'} ? 'active'">
+        <i class="bi bi-speedometer2"></i> <span>Tableau de bord</span>
+      </a>
       <a th:href="@{/hackathons}" class="sidebar-link" th:classappend="${active == 'hackathons'} ? 'active'">
         <i class="bi bi-grid-1x2-fill"></i> <span>Hackathons</span>
       </a>

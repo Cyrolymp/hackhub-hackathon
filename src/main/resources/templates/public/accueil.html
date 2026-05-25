@@ -34,15 +34,15 @@
 
         <div class="stats-row">
           <div class="stat-item">
-            <div class="stat-num" th:text="${nbHackathons}">0</div>
+            <div class="stat-num count-up" th:data-target="${nbHackathons}" th:text="${nbHackathons}">0</div>
             <div class="stat-label">Hackathons</div>
           </div>
           <div class="stat-item">
-            <div class="stat-num" th:text="${nbEquipes}">0</div>
+            <div class="stat-num count-up" th:data-target="${nbEquipes}" th:text="${nbEquipes}">0</div>
             <div class="stat-label">Équipes</div>
           </div>
           <div class="stat-item">
-            <div class="stat-num" th:text="${nbParticipants}">0</div>
+            <div class="stat-num count-up" th:data-target="${nbParticipants}" th:text="${nbParticipants}">0</div>
             <div class="stat-label">Participants</div>
           </div>
         </div>
@@ -53,6 +53,21 @@
   </main>
 
   <th:block th:replace="~{_fragments/layout :: bottom-scripts}"></th:block>
+
+  <script>
+    document.querySelectorAll('.count-up').forEach(function (el) {
+      var target = parseInt(el.getAttribute('data-target') || '0', 10);
+      if (isNaN(target)) return;
+      var dur = 900, start = null;
+      function step(ts) {
+        if (!start) start = ts;
+        var p = Math.min((ts - start) / dur, 1);
+        el.textContent = Math.floor(p * target);
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  </script>
 
 </body>
 

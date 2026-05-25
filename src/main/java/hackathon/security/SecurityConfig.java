@@ -35,7 +35,7 @@ public class SecurityConfig {
 				.logout( logout -> logout.logoutUrl( "/logout" ).logoutSuccessUrl( "/disconnected" ) )
 				.exceptionHandling( req -> req.accessDeniedPage( "/accessDenied" ) )
 				.authorizeHttpRequests(
-						auth -> auth.requestMatchers( "/*", "/css/**", "/img/**", "/js/**", "/lib/**" ).permitAll() )
+						auth -> auth.requestMatchers( "/*", "/hackathons/**", "/equipes/**", "/css/**", "/img/**", "/js/**", "/lib/**" ).permitAll() )
 				.authorizeHttpRequests( auth -> auth.anyRequest().authenticated() );
 
 		return httpSecurity.build();

@@ -1,0 +1,130 @@
+<!doctype html>
+<html th:with="tabTitle=${hackathon.nomHack}" lang="fr">
+
+<head th:replace="~{_fragments/layout :: head(${tabTitle})}">
+  <meta charset="UTF-8">
+</head>
+
+<body class="dashboard-body">
+
+  <aside th:replace="~{_fragments/layout :: sidebar('hackathons')}"></aside>
+
+  <main class="main-content">
+
+    <header th:replace="~{_fragments/layout :: topbar('Détail du hackathon', 'Programme et inscrits')}"></header>
+
+    <section class="content-section">
+
+      <div class="row g-4">
+
+        <!-- Colonne principale -->
+        <div class="col-12 col-lg-8">
+          <div class="card">
+            <div class="card-body">
+              <div class="hack-detail-banner"></div>
+              <h2 class="hack-detail-title" th:text="${hackathon.nomHack}">Nom</h2>
+              <div class="hack-detail-org" th:if="${organisateur != null}">
+                <i class="bi bi-building"></i> Organisé par <span th:text="${organisateur.nomOrg}">Org</span>
+              </div>
+
+              <div class="hack-detail-meta">
+                <span class="meta-pill"><i class="bi bi-tag-fill"></i> <span th:text="${hackathon.themeHach}">Thème</span></span>
+                <span class="meta-pill"><i class="bi bi-geo-alt-fill"></i> <span th:text="${hackathon.lieuHack}">Lieu</span></span>
+                <span class="meta-pill"><i class="bi bi-calendar-event"></i>
+                  <span th:text="${hackathon.dateDeb}">début</span> &rarr; <span th:text="${hackathon.dateFin}">fin</span></span>
+                <span class="meta-pill"><i class="bi bi-clock"></i> <span th:text="${hackathon.heureDeb}">heure</span></span>
+              </div>
+
+              <div class="prize-box">
+                <i class="bi bi-stars"></i>
+                <div>
+                  <div class="prize-label">Thématique</div>
+                  <div class="prize-amount" th:text="${hackathon.themeHach}">Thème</div>
+                </div>
+              </div>
+
+              <div class="hack-detail-desc" th:if="${hackathon.contact != null}">
+                <i class="bi bi-envelope"></i> Contact : <span th:text="${hackathon.contact}">contact</span>
+              </div>
+
+              <!-- Épreuves -->
+              <div class="section-heading"><i class="bi bi-flag-fill"></i> Épreuves</div>
+              <div th:if="${epreuves.size() > 0}" class="d-flex flex-wrap gap-2">
+                <span class="meta-pill" th:each="e : ${epreuves}">
+                  <i class="bi bi-flag"></i> <span th:text="${e.nomEpreuve}">Épreuve</span>
+                  <span class="text-muted-nav">(max <span th:text="${e.nbrMaxEquipe}">0</span> éq.)</span>
+                </span>
+              </div>
+              <p th:unless="${epreuves.size() > 0}" class="text-muted-nav">Aucune épreuve définie.</p>
+
+              <!-- Équipes inscrites -->
+              <div class="section-heading"><i class="bi bi-people-fill"></i> Équipes inscrites
+                (<span th:text="${equipes.size()}">0</span>)</div>
+              <table th:if="${equipes.size() > 0}" class="table table-sm table-hover align-middle">
+                <thead class="table-dark">
+                  <tr>
+                    <th>Équipe</th>
+                    <th>Chef</th>
+                    <th>Code</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="equ : ${equipes}">
+                    <td><a th:href="@{/equipes/{id}(id=${equ.idEquipe})}" class="text-decoration-none"
+                        th:text="${equ.nomEquipe}">Équipe</a></td>
+                    <td th:text="${equ.nomChef}">Chef</td>
+                    <td><span class="hack-tag" th:text="${equ.codeEquipe}">CODE</span></td>
+                  </tr>
+                </tbody>
+              </table>
+              <p th:unless="${equipes.size() > 0}" class="text-muted-nav">Aucune équipe inscrite pour le moment.</p>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Colonne latérale -->
+        <div class="col-12 col-lg-4">
+
+          <div class="card mb-3">
+            <div class="card-body text-center">
+              <h5>Envie de participer ?</h5>
+              <p class="text-muted-nav">Inscrivez-vous et rejoignez ou créez une équipe.</p>
+              <a th:href="@{/inscription}" class="btn btn-primary w-100">
+                <i class="bi bi-person-plus-fill me-1"></i> S'inscrire</a>
+            </div>
+          </div>
+
+          <!-- Partenaires -->
+          <div class="section-heading"><i class="bi bi-people"></i> Partenaires</div>
+          <div th:if="${partenaires.size() > 0}" class="d-flex flex-wrap gap-2 mb-3">
+            <span class="status-badge status-ouvert" th:each="p : ${partenaires}" th:text="${p.nomPartenaire}">Partenaire</span>
+          </div>
+          <p th:unless="${partenaires.size() > 0}" class="text-muted-nav">Aucun partenaire.</p>
+
+          <!-- Staff -->
+          <div class="section-heading"><i class="bi bi-person-badge-fill"></i> Équipe organisatrice</div>
+          <ul th:if="${staff.size() > 0}" class="list-unstyled">
+            <li th:each="m : ${staff}" class="mb-1">
+              <i class="bi bi-person-circle"></i> <span th:text="${m.nomMenstaf}">Membre</span>
+            </li>
+          </ul>
+          <p th:unless="${staff.size() > 0}" class="text-muted-nav">Non renseigné.</p>
+
+        </div>
+
+      </div>
+
+      <div class="mt-3">
+        <a th:href="@{/hackathons}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i> Retour</a>
+      </div>
+
+    </section>
+
+  </main>
+
+  <th:block th:replace="~{_fragments/layout :: bottom-scripts}"></th:block>
+
+</body>
+
+</html>

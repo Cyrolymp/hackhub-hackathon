@@ -15,10 +15,15 @@
 
     <section class="content-section">
 
-      <div th:if="${hackathons.size() > 0}" class="row g-3">
-        <div class="col-12 col-md-6 col-lg-4" th:each="h,stat : ${hackathons}">
-          <div class="hack-card-dash"
-            th:classappend="${ {'c-purple','c-teal','c-amber','c-pink','c-blue'}[stat.index % 5] }">
+      <!-- Filtres par catégorie (générés depuis les thèmes) -->
+      <div class="filter-bar" id="filter-bar" th:if="${hackathons.size() > 0}"></div>
+
+      <div th:if="${hackathons.size() > 0}" class="row g-3" id="hack-grid">
+        <div class="col-12 col-md-6 col-lg-4 hack-col" th:each="h,stat : ${hackathons}"
+          th:attr="data-theme=${h.themeHach}">
+          <div class="hack-card-dash anim-in"
+            th:with="ci=${stat.index % 5}" th:classappend="${ci == 0 ? 'c-purple' : (ci == 1 ? 'c-teal' : (ci == 2 ? 'c-amber' : (ci == 3 ? 'c-pink' : 'c-blue')))}"
+            th:style="|animation-delay:${stat.index * 60}ms|">
             <span class="hack-tag" th:text="${h.themeHach}">Thème</span>
             <h6 th:text="${h.nomHack}">Nom</h6>
             <div class="hack-org"><i class="bi bi-geo-alt-fill"></i> <span th:text="${h.lieuHack}">Lieu</span></div>
@@ -27,8 +32,11 @@
               <span class="meta-pill"><i class="bi bi-calendar-check"></i> <span th:text="${h.dateFin}">fin</span></span>
             </div>
             <span class="status-badge status-ouvert"><i class="bi bi-unlock-fill"></i> Inscriptions ouvertes</span>
-            <a th:href="@{/inscription}" class="btn btn-primary btn-sm mt-2 w-100">
-              <i class="bi bi-person-plus-fill me-1"></i> Participer</a>
+            <div class="d-flex gap-2 mt-2">
+              <a th:href="@{/hackathons/{id}(id=${h.idHack})}" class="btn btn-outline-light btn-sm flex-fill">Détail</a>
+              <a th:href="@{/inscription}" class="btn btn-primary btn-sm flex-fill">
+                <i class="bi bi-person-plus-fill"></i> Participer</a>
+            </div>
           </div>
         </div>
       </div>
@@ -44,6 +52,36 @@
   </main>
 
   <th:block th:replace="~{_fragments/layout :: bottom-scripts}"></th:block>
+
+  <script>
+    (function () {
+      var grid = document.getElementById('hack-grid');
+      var bar = document.getElementById('filter-bar');
+      if (!grid || !bar) return;
+      var cols = Array.prototype.slice.call(grid.querySelectorAll('.hack-col'));
+      var themes = [];
+      cols.forEach(function (c) {
+        var t = c.getAttribute('data-theme');
+        if (t && themes.indexOf(t) < 0) themes.push(t);
+      });
+      function makeBtn(label, theme) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'filter-btn' + (theme === null ? ' active' : '');
+        b.textContent = label;
+        b.onclick = function () {
+          bar.querySelectorAll('.filter-btn').forEach(function (x) { x.classList.remove('active'); });
+          b.classList.add('active');
+          cols.forEach(function (c) {
+            c.style.display = (theme === null || c.getAttribute('data-theme') === theme) ? '' : 'none';
+          });
+        };
+        return b;
+      }
+      bar.appendChild(makeBtn('Tous', null));
+      themes.forEach(function (t) { bar.appendChild(makeBtn(t, t)); });
+    })();
+  </script>
 
 </body>
 

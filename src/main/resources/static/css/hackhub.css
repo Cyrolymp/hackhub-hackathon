@@ -324,3 +324,37 @@ a.text-secondary:hover { color:var(--hh-primary) !important; }
 .empty-state i { font-size:2.5rem; color:var(--primary); margin-bottom:0.75rem; display:block; }
 .empty-state h3 { color:#E2E8F0; font-weight:600; }
 .empty-state p { color:var(--text-muted); }
+
+/* ============================================================
+   FILTRES, DÉTAIL HACKATHON, ANIMATIONS EN CASCADE
+   ============================================================ */
+
+/* Filtres par catégorie */
+.filter-bar { display:flex; gap:8px; margin-bottom:1.5rem; flex-wrap:wrap; }
+.filter-btn { background:var(--dark3); border:1px solid var(--border); border-radius:8px; padding:0.4rem 1rem;
+  color:var(--text-muted); font-size:0.82rem; font-family:'Space Grotesk',sans-serif; font-weight:500;
+  cursor:pointer; transition:all 0.18s; }
+.filter-btn:hover { border-color:var(--primary); color:#CCD6F6; }
+.filter-btn.active { background:rgba(108,71,255,0.15); border-color:var(--primary); color:var(--primary); }
+
+/* Détail hackathon */
+.hack-detail-banner { height:8px; border-radius:6px; margin-bottom:1.25rem;
+  background:linear-gradient(90deg, var(--primary), var(--accent)); }
+.hack-detail-title { color:#fff; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.6rem; margin-bottom:0.3rem; }
+.hack-detail-org { color:var(--text-muted); font-size:0.9rem; margin-bottom:1rem; }
+.hack-detail-meta { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:1rem; }
+.hack-detail-desc { color:#8892B0; font-size:0.9rem; line-height:1.6; margin-bottom:1.25rem; }
+.prize-box { background:rgba(108,71,255,0.1); border:1px solid rgba(108,71,255,0.25); border-radius:10px;
+  padding:0.9rem 1rem; display:flex; align-items:center; gap:10px; margin-bottom:1.25rem; }
+.prize-box i { font-size:1.4rem; color:#fbbf24; }
+.prize-box .prize-label { font-size:0.72rem; color:var(--text-muted); font-family:'Space Grotesk',sans-serif;
+  text-transform:uppercase; letter-spacing:0.5px; }
+.prize-box .prize-amount { font-size:1rem; font-weight:700; color:#fff; font-family:'Space Grotesk',sans-serif; }
+
+/* Titre de section interne */
+.section-heading { font-family:'Space Grotesk',sans-serif; font-weight:600; color:#E2E8F0; font-size:1.05rem;
+  margin:1.5rem 0 0.75rem; display:flex; align-items:center; gap:8px; }
+.section-heading i { color:var(--primary); }
+
+/* Entrée animée en cascade (délai défini en ligne) */
+.anim-in { animation: fadeInUp .5s ease both; }

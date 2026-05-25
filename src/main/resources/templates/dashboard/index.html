@@ -1,0 +1,138 @@
+<!doctype html>
+<html th:with="tabTitle='Tableau de bord'" lang="fr">
+
+<head th:replace="~{_fragments/layout :: head(${tabTitle})}">
+  <meta charset="UTF-8">
+</head>
+
+<body class="dashboard-body">
+
+  <aside th:replace="~{_fragments/layout :: sidebar('dashboard')}"></aside>
+
+  <main class="main-content">
+
+    <header th:replace="~{_fragments/layout :: topbar('Tableau de bord', 'Vue globale de la plateforme')}"></header>
+
+    <section class="content-section">
+
+      <!-- Cartes statistiques -->
+      <div class="row g-3 mb-4">
+        <div class="col-6 col-md-4 col-xl-2">
+          <div class="stat-card anim-in" style="animation-delay:0ms">
+            <div class="stat-card-icon icon-purple"><i class="bi bi-calendar-event"></i></div>
+            <div class="stat-card-num count-up" th:data-target="${nbHackathons}" th:text="${nbHackathons}">0</div>
+            <div class="stat-card-label">Hackathons</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-xl-2">
+          <div class="stat-card anim-in" style="animation-delay:60ms">
+            <div class="stat-card-icon icon-teal"><i class="bi bi-people-fill"></i></div>
+            <div class="stat-card-num count-up" th:data-target="${nbEquipes}" th:text="${nbEquipes}">0</div>
+            <div class="stat-card-label">Équipes</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-xl-2">
+          <div class="stat-card anim-in" style="animation-delay:120ms">
+            <div class="stat-card-icon icon-pink"><i class="bi bi-person-lines-fill"></i></div>
+            <div class="stat-card-num count-up" th:data-target="${nbParticipants}" th:text="${nbParticipants}">0</div>
+            <div class="stat-card-label">Participants</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-xl-2">
+          <div class="stat-card anim-in" style="animation-delay:180ms">
+            <div class="stat-card-icon icon-amber"><i class="bi bi-clipboard-check-fill"></i></div>
+            <div class="stat-card-num count-up" th:data-target="${nbJuges}" th:text="${nbJuges}">0</div>
+            <div class="stat-card-label">Juges</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-xl-2">
+          <div class="stat-card anim-in" style="animation-delay:240ms">
+            <div class="stat-card-icon icon-purple"><i class="bi bi-flag-fill"></i></div>
+            <div class="stat-card-num count-up" th:data-target="${nbEpreuves}" th:text="${nbEpreuves}">0</div>
+            <div class="stat-card-label">Épreuves</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-xl-2">
+          <div class="stat-card anim-in" style="animation-delay:300ms">
+            <div class="stat-card-icon icon-teal"><i class="bi bi-people"></i></div>
+            <div class="stat-card-num count-up" th:data-target="${nbPartenaires}" th:text="${nbPartenaires}">0</div>
+            <div class="stat-card-label">Partenaires</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4">
+
+        <!-- Top équipes -->
+        <div class="col-12 col-lg-5">
+          <div class="section-heading"><i class="bi bi-trophy-fill"></i> Top équipes</div>
+          <div class="card">
+            <div class="card-body p-0">
+              <table class="table table-sm table-hover align-middle mb-0" th:if="${classement.size() > 0}">
+                <tbody>
+                  <tr th:each="l,st : ${classement}" th:if="${st.index < 5}">
+                    <td class="text-center fw-bold" style="width:3rem;">
+                      <span th:if="${st.count == 1}">🥇</span>
+                      <span th:if="${st.count == 2}">🥈</span>
+                      <span th:if="${st.count == 3}">🥉</span>
+                      <span th:if="${st.count > 3}" th:text="${st.count}"></span>
+                    </td>
+                    <td>
+                      <div th:text="${l.nomEquipe}" class="fw-semibold">Équipe</div>
+                      <div class="text-muted-nav" th:text="${l.nomHack}">Hackathon</div>
+                    </td>
+                    <td class="text-end fw-bold"
+                      th:text="${l.moyenne != null} ? ${#numbers.formatDecimal(l.moyenne,1,2)} : '—'">—</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div th:unless="${classement.size() > 0}" class="p-4 text-center text-muted-nav">Aucune équipe notée.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hackathons récents -->
+        <div class="col-12 col-lg-7">
+          <div class="section-heading"><i class="bi bi-calendar-event"></i> Hackathons</div>
+          <div class="row g-3" th:if="${hackathons.size() > 0}">
+            <div class="col-12 col-md-6" th:each="h,st : ${hackathons}" th:if="${st.index < 4}">
+              <div class="hack-card-dash anim-in"
+                th:with="ci=${st.index % 5}" th:classappend="${ci == 0 ? 'c-purple' : (ci == 1 ? 'c-teal' : (ci == 2 ? 'c-amber' : (ci == 3 ? 'c-pink' : 'c-blue')))}"
+                th:style="|animation-delay:${st.index * 60}ms|">
+                <span class="hack-tag" th:text="${h.themeHach}">Thème</span>
+                <h6 th:text="${h.nomHack}">Nom</h6>
+                <div class="hack-org"><i class="bi bi-geo-alt-fill"></i> <span th:text="${h.lieuHack}">Lieu</span></div>
+                <a th:href="@{/hackathons/{id}(id=${h.idHack})}" class="btn btn-outline-light btn-sm mt-1">Détail</a>
+              </div>
+            </div>
+          </div>
+          <div th:unless="${hackathons.size() > 0}" class="text-muted-nav">Aucun hackathon.</div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <th:block th:replace="~{_fragments/layout :: bottom-scripts}"></th:block>
+
+  <script>
+    document.querySelectorAll('.count-up').forEach(function (el) {
+      var target = parseInt(el.getAttribute('data-target') || '0', 10);
+      if (isNaN(target)) return;
+      var dur = 900, start = null;
+      function step(ts) {
+        if (!start) start = ts;
+        var p = Math.min((ts - start) / dur, 1);
+        el.textContent = Math.floor(p * target);
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  </script>
+
+</body>
+
+</html>

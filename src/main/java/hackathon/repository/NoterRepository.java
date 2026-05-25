@@ -76,6 +76,19 @@ public class NoterRepository {
 				rs.getBigDecimal( "moyenne" ), rs.getInt( "nb" ) ) );
 	}
 
+	// Notes d'une équipe avec le nom du juge
+	public List<LigneNote> notesEquipe( Long idEquipe ) {
+		var sql = "SELECT e.nom_equipe, j.nom_juge, n.note "
+				+ "FROM noter n "
+				+ "JOIN equipe e ON e.id_equipe = n.id_equipe "
+				+ "JOIN juge j ON j.id_juge = n.id_juge "
+				+ "WHERE n.id_equipe = :idEquipe "
+				+ "ORDER BY j.nom_juge";
+		var p = new MapSqlParameterSource( "idEquipe", idEquipe );
+		return jdbc.query( sql, p, ( rs, i ) -> new LigneNote(
+				rs.getString( "nom_equipe" ), rs.getString( "nom_juge" ), rs.getBigDecimal( "note" ) ) );
+	}
+
 	// Toutes les notes (équipe, juge, note) pour affichage
 	public List<LigneNote> toutesLesNotes() {
 		var sql = "SELECT e.nom_equipe, j.nom_juge, n.note "
