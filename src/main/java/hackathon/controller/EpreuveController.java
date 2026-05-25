@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-@RolesAllowed( "ADMIN" )
+@RolesAllowed( { "ADMIN", "ORGANISATEUR" } )
 @RequestMapping( "/epreuve" )
 @SessionAttributes( "pagingEpreuve" )
 public class EpreuveController {

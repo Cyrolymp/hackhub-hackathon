@@ -1,0 +1,203 @@
+<!doctype html>
+<html th:with="tabTitle='Inscription'" lang="fr">
+
+<head th:replace="~{_fragments/layout :: head(${tabTitle})}">
+  <meta charset="UTF-8">
+</head>
+
+<body class="dashboard-body">
+
+  <aside th:replace="~{_fragments/layout :: sidebar('')}"></aside>
+
+  <main class="main-content">
+
+    <header th:replace="~{_fragments/layout :: topbar('Inscription', 'Créez votre compte selon votre profil')}"></header>
+
+    <section class="content-section">
+
+      <div class="card mx-auto" style="max-width: 36rem;">
+        <div class="card-body">
+
+          <form th:action="@{/inscription}" th:object="${form}" method="post">
+
+            <!-- ===== Identifiants ===== -->
+            <h5 class="mb-3">Identifiants</h5>
+
+            <div class="row my-2">
+              <div class="col-12 col-xl-4"><label class="form-label">Pseudo *</label></div>
+              <div class="col">
+                <input type="text" th:field="*{pseudo}" required minlength="3" maxlength="25" class="form-control">
+              </div>
+            </div>
+            <div class="row my-2">
+              <div class="col-12 col-xl-4"><label class="form-label">E-mail *</label></div>
+              <div class="col">
+                <input type="email" th:field="*{email}" required maxlength="50" class="form-control">
+              </div>
+            </div>
+            <div class="row my-2">
+              <div class="col-12 col-xl-4"><label class="form-label">Mot de passe *</label></div>
+              <div class="col">
+                <input type="password" th:field="*{motDePasse}" required minlength="3" maxlength="30"
+                  class="form-control">
+              </div>
+            </div>
+
+            <hr class="my-3">
+
+            <!-- ===== Type de compte ===== -->
+            <h5 class="mb-3">Type de compte</h5>
+
+            <div class="row my-2">
+              <div class="col-12 col-xl-4"><label class="form-label">Je suis *</label></div>
+              <div class="col">
+                <select th:field="*{role}" onchange="updateForm()" id="role" class="form-select">
+                  <option value="PARTICIPANT">Participant</option>
+                  <option value="JUGE">Juge</option>
+                  <option value="ORGANISATEUR">Organisateur (entreprise)</option>
+                  <option value="PARTENAIRE">Partenaire</option>
+                  <option value="MENTOR">Mentor</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Nom (commun à tous) -->
+            <div class="row my-2">
+              <div class="col-12 col-xl-4"><label class="form-label" id="label-nom">Nom complet</label></div>
+              <div class="col">
+                <input type="text" th:field="*{nom}" maxlength="50" class="form-control">
+              </div>
+            </div>
+
+            <!-- Spécialité (juge / mentor) -->
+            <div class="row my-2" id="field-specialite">
+              <div class="col-12 col-xl-4"><label class="form-label">Spécialité</label></div>
+              <div class="col">
+                <input type="text" th:field="*{specialite}" maxlength="50" class="form-control"
+                  placeholder="ex : Intelligence Artificielle">
+              </div>
+            </div>
+
+            <!-- Contact (partenaire) -->
+            <div class="row my-2" id="field-contact">
+              <div class="col-12 col-xl-4"><label class="form-label">Contact</label></div>
+              <div class="col">
+                <input type="text" th:field="*{contact}" maxlength="50" class="form-control"
+                  placeholder="téléphone ou e-mail de contact">
+              </div>
+            </div>
+
+            <!-- ===== Bloc Participant ===== -->
+            <div id="block-participant">
+              <div class="row my-2">
+                <div class="col-12 col-xl-4"><label class="form-label">Établissement</label></div>
+                <div class="col">
+                  <input type="text" th:field="*{etablissement}" maxlength="50" class="form-control">
+                </div>
+              </div>
+
+              <div class="row my-2">
+                <div class="col-12 col-xl-4"><label class="form-label">Mon équipe</label></div>
+                <div class="col">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" th:field="*{teamMode}" value="JOIN"
+                      onchange="updateTeam()" id="teamJoin">
+                    <label class="form-check-label" for="teamJoin">Rejoindre une équipe (avec un code)</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" th:field="*{teamMode}" value="CREATE"
+                      onchange="updateTeam()" id="teamCreate">
+                    <label class="form-check-label" for="teamCreate">Créer une nouvelle équipe</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Rejoindre -->
+              <div id="team-join" class="row my-2">
+                <div class="col-12 col-xl-4"><label class="form-label">Code d'équipe</label></div>
+                <div class="col">
+                  <input type="text" th:field="*{codeEquipe}" maxlength="10" class="form-control text-uppercase"
+                    placeholder="ex : NEUR01">
+                </div>
+              </div>
+
+              <!-- Créer -->
+              <div id="team-create">
+                <div class="row my-2">
+                  <div class="col-12 col-xl-4"><label class="form-label">Nom de l'équipe</label></div>
+                  <div class="col">
+                    <input type="text" th:field="*{nomEquipe}" maxlength="50" class="form-control">
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-12 col-xl-4"><label class="form-label">Hackathon</label></div>
+                  <div class="col">
+                    <select th:field="*{idHack}" class="form-select">
+                      <option value="">-- Choisir --</option>
+                      <option th:each="h : ${hackathons}" th:value="${h.idHack}" th:text="${h.nomHack}"></option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-12 col-xl-4"><label class="form-label">Épreuve</label></div>
+                  <div class="col">
+                    <select th:field="*{idEpreuve}" class="form-select">
+                      <option value="">-- Choisir --</option>
+                      <option th:each="e : ${epreuves}" th:value="${e.idEpreuve}" th:text="${e.nomEpreuve}"></option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bouton -->
+            <div class="text-center mt-4">
+              <input type="submit" class="btn btn-primary" value="S'inscrire">
+            </div>
+
+            <p class="text-center mt-3 mb-0">
+              Déjà un compte ? <a th:href="@{/connexion}">Se connecter</a>
+            </p>
+
+          </form>
+
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <div th:replace="~{_fragments/component :: alert}"></div>
+
+  <th:block th:replace="~{_fragments/layout :: bottom-scripts}"></th:block>
+
+  <script>
+    function show(id, visible) {
+      var e = document.getElementById(id);
+      if (e) e.style.display = visible ? '' : 'none';
+    }
+    function updateTeam() {
+      var checked = document.querySelector('input[name="teamMode"]:checked');
+      var mode = checked ? checked.value : 'JOIN';
+      show('team-join', mode === 'JOIN');
+      show('team-create', mode === 'CREATE');
+    }
+    function updateForm() {
+      var role = document.getElementById('role').value;
+      show('block-participant', role === 'PARTICIPANT');
+      show('field-specialite', role === 'JUGE' || role === 'MENTOR');
+      show('field-contact', role === 'PARTENAIRE');
+      var labelNom = document.getElementById('label-nom');
+      if (labelNom) {
+        labelNom.textContent = (role === 'ORGANISATEUR' || role === 'PARTENAIRE')
+          ? 'Nom de la structure' : 'Nom complet';
+      }
+      if (role === 'PARTICIPANT') updateTeam();
+    }
+    document.addEventListener('DOMContentLoaded', updateForm);
+  </script>
+
+</body>
+
+</html>

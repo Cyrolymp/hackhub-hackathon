@@ -1,17 +1,10 @@
 package hackathon.controller;
 
-import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
-
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import hackathon.repository.HackathonRepository;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -19,42 +12,30 @@ import lombok.RequiredArgsConstructor;
 public class PublicController {
 
 	// -------
-	// Champs
+	// Composants injectés
 	// -------
 
-	private final UserDetailsService	userDetailsService;
-	private final RememberMeServices	rememberMeServices;
-
-	private boolean autoConnect = true; // true -> active l'autoconnexion
+	private final HackathonRepository hackathonRepository;
 
 	// -------
 	// Endpoints
 	// -------
 
-	// -------
 	// home()
 
 	@GetMapping( "/" )
-	public String home( HttpServletRequest request, HttpServletResponse response ) {
-
-		// Connexion automatique avec le compe admin
-		var	session	= request.getSession( true );
-		var	sc		= (SecurityContext) session.getAttribute( SPRING_SECURITY_CONTEXT_KEY );
-		if ( sc == null && autoConnect ) {
-			var	userDetails	= userDetailsService.loadUserByUsername( "admin" );
-			var	authReq		= new UsernamePasswordAuthenticationToken( userDetails, null,
-					userDetails.getAuthorities() );
-			rememberMeServices.loginSuccess( request, response, authReq );
-			sc = SecurityContextHolder.getContext();
-			sc.setAuthentication( authReq );
-			session.setAttribute( SPRING_SECURITY_CONTEXT_KEY, sc );
-		}
-
-		autoConnect = false;
+	public String home() {
 		return "public/accueil.html";
 	}
 
-	// -------
+	// hackathons() : liste publique des hackathons
+
+	@GetMapping( "/hackathons" )
+	public String hackathons( Model model ) {
+		model.addAttribute( "hackathons", hackathonRepository.findAll() );
+		return "public/hackathons.html";
+	}
+
 	// mentionsLegales()
 
 	@GetMapping( "/mentions-legales" )
@@ -62,7 +43,6 @@ public class PublicController {
 		return "public/mentions-legales.html";
 	}
 
-	// -------
 	// quiSommesNous()
 
 	@GetMapping( "/qui-sommes-nous" )

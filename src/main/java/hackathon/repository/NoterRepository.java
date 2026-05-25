@@ -8,6 +8,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import hackathon.domain.Noter;
+import hackathon.dto.LigneClassement;
+import hackathon.dto.LigneNote;
 import lombok.RequiredArgsConstructor;
 
 @Repository
@@ -58,6 +60,31 @@ public class NoterRepository {
 				.addValue( "idEquipe", idEquipe )
 				.addValue( "idJuge", idJuge );
 		jdbc.update( sql, p );
+	}
+
+	// Classement : toutes les équipes triées par moyenne décroissante
+	public List<LigneClassement> classement() {
+		var sql = "SELECT e.id_equipe, e.nom_equipe, h.nom_hack, "
+				+ "       AVG(n.note) AS moyenne, COUNT(n.note) AS nb "
+				+ "FROM equipe e "
+				+ "JOIN hackathon h ON h.id_hack = e.id_hack "
+				+ "LEFT JOIN noter n ON n.id_equipe = e.id_equipe "
+				+ "GROUP BY e.id_equipe, e.nom_equipe, h.nom_hack "
+				+ "ORDER BY moyenne DESC NULLS LAST, e.nom_equipe";
+		return jdbc.query( sql, ( rs, i ) -> new LigneClassement(
+				rs.getLong( "id_equipe" ), rs.getString( "nom_equipe" ), rs.getString( "nom_hack" ),
+				rs.getBigDecimal( "moyenne" ), rs.getInt( "nb" ) ) );
+	}
+
+	// Toutes les notes (équipe, juge, note) pour affichage
+	public List<LigneNote> toutesLesNotes() {
+		var sql = "SELECT e.nom_equipe, j.nom_juge, n.note "
+				+ "FROM noter n "
+				+ "JOIN equipe e ON e.id_equipe = n.id_equipe "
+				+ "JOIN juge j ON j.id_juge = n.id_juge "
+				+ "ORDER BY e.nom_equipe, j.nom_juge";
+		return jdbc.query( sql, ( rs, i ) -> new LigneNote(
+				rs.getString( "nom_equipe" ), rs.getString( "nom_juge" ), rs.getBigDecimal( "note" ) ) );
 	}
 
 }
