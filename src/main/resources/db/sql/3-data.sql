@@ -18,20 +18,20 @@ RESTART IDENTITY CASCADE;
 -- Comptes (mot de passe = pseudo, haché en BCrypt)
 -- =======
 INSERT INTO compte (id_compte, pseudo, empreinte_mdp, email, role_admin) VALUES
-( 1, 'admin',   ext.crypt('admin',   ext.gen_salt('bf')), 'admin@mail.com',   TRUE ),
-( 2, 'max',     ext.crypt('max',     ext.gen_salt('bf')), 'max@mail.com',     FALSE ),
-( 3, 'mika',    ext.crypt('mika',    ext.gen_salt('bf')), 'mika@mail.com',    FALSE ),
-( 4, 'tom',     ext.crypt('tom',     ext.gen_salt('bf')), 'tom@mail.com',     FALSE ),
-( 5, 'eva',     ext.crypt('eva',     ext.gen_salt('bf')), 'eva@mail.com',     FALSE ),
-( 6, 'marie',   ext.crypt('marie',   ext.gen_salt('bf')), 'marie@mail.com',   FALSE ),
-( 7, 'paul',    ext.crypt('paul',    ext.gen_salt('bf')), 'paul@mail.com',    FALSE ),
-( 8, 'sophie',  ext.crypt('sophie',  ext.gen_salt('bf')), 'sophie@mail.com',  FALSE ),
-( 9, 'marc',    ext.crypt('marc',    ext.gen_salt('bf')), 'marc@mail.com',    FALSE ),
-(10, 'lina',    ext.crypt('lina',    ext.gen_salt('bf')), 'lina@mail.com',    FALSE ),
-(11, 'techcorp',ext.crypt('techcorp',ext.gen_salt('bf')), 'contact@techcorp.com', FALSE ),
-(12, 'datasoft',ext.crypt('datasoft',ext.gen_salt('bf')), 'contact@datasoft.com', FALSE ),
-(13, 'alex',    ext.crypt('alex',    ext.gen_salt('bf')), 'alex@mail.com',    FALSE ),
-(14, 'nina',    ext.crypt('nina',    ext.gen_salt('bf')), 'nina@mail.com',    FALSE );
+( 1, 'admin',   ext.crypt('HackHub@2026', ext.gen_salt('bf')), 'admin@mail.com',   TRUE ),
+( 2, 'max',     ext.crypt('HackHub@2026', ext.gen_salt('bf')), 'max@mail.com',     FALSE ),
+( 3, 'mika',    ext.crypt('HackHub@2026', ext.gen_salt('bf')), 'mika@mail.com',    FALSE ),
+( 4, 'tom',     ext.crypt('HackHub@2026', ext.gen_salt('bf')), 'tom@mail.com',     FALSE ),
+( 5, 'eva',     ext.crypt('HackHub@2026', ext.gen_salt('bf')), 'eva@mail.com',     FALSE ),
+( 6, 'marie',   ext.crypt('HackHub@2026', ext.gen_salt('bf')), 'marie@mail.com',   FALSE ),
+( 7, 'paul',    ext.crypt('HackHub@2026', ext.gen_salt('bf')), 'paul@mail.com',    FALSE ),
+( 8, 'sophie',  ext.crypt('HackHub@2026', ext.gen_salt('bf')), 'sophie@mail.com',  FALSE ),
+( 9, 'marc',    ext.crypt('HackHub@2026', ext.gen_salt('bf')), 'marc@mail.com',    FALSE ),
+(10, 'lina',    ext.crypt('HackHub@2026', ext.gen_salt('bf')), 'lina@mail.com',    FALSE ),
+(11, 'techcorp',ext.crypt('HackHub@2026', ext.gen_salt('bf')), 'contact@techcorp.com', FALSE ),
+(12, 'datasoft',ext.crypt('HackHub@2026', ext.gen_salt('bf')), 'contact@datasoft.com', FALSE ),
+(13, 'alex',    ext.crypt('HackHub@2026', ext.gen_salt('bf')), 'alex@mail.com',    FALSE ),
+(14, 'nina',    ext.crypt('HackHub@2026', ext.gen_salt('bf')), 'nina@mail.com',    FALSE );
 
 -- =======
 -- Membres du staff

@@ -56,8 +56,15 @@ public class InscriptionService {
 		if ( !compteRepository.verifierUniciteEmail( f.getEmail(), null ) ) {
 			throw new InscriptionException( "Cet e-mail est déjà utilisé" );
 		}
-		if ( blank( f.getMotDePasse() ) ) {
+		String mdp = f.getMotDePasse();
+		if ( blank( mdp ) ) {
 			throw new InscriptionException( "Le mot de passe est obligatoire" );
+		}
+		if ( mdp.length() < 8 ) {
+			throw new InscriptionException( "Le mot de passe doit faire au moins 8 caractères" );
+		}
+		if ( !mdp.matches( ".*[A-Za-zÀ-ÿ].*" ) || !mdp.matches( ".*[0-9].*" ) ) {
+			throw new InscriptionException( "Le mot de passe doit contenir au moins une lettre et un chiffre" );
 		}
 		if ( blank( f.getRole() ) ) {
 			throw new InscriptionException( "Choisissez un type de compte" );
@@ -205,14 +212,4 @@ public class InscriptionService {
 		for ( int essai = 0; essai < 25; essai++ ) {
 			StringBuilder sb = new StringBuilder();
 			for ( int i = 0; i < 6; i++ ) {
-				sb.append( chars.charAt( r.nextInt( chars.length() ) ) );
-			}
-			String code = sb.toString();
-			if ( equipeRepository.findByCodeEquipe( code ) == null ) {
-				return code;
-			}
-		}
-		return "EQ" + ( System.currentTimeMillis() % 100000 );
-	}
-
-}
+				sb.append( chars.charAt( r.nextInt( cha

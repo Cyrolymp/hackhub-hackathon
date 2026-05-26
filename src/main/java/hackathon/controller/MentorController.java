@@ -15,6 +15,7 @@ import hackathon.service.MentorService;
 import hackathon.util.Alert;
 import hackathon.util.Paging;
 import jakarta.annotation.security.RolesAllowed;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -58,7 +59,7 @@ public class MentorController {
 	}
 
 	@PostMapping( "/form" )
-	public String save( @ModelAttribute( "item" ) Mentor item, BindingResult result,
+	public String save( @Valid @ModelAttribute( "item" ) Mentor item, BindingResult result,
 			Model model, RedirectAttributes ra ) {
 		if ( result.hasErrors() ) {
 			return buildPageForm( item, model );

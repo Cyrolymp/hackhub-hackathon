@@ -38,8 +38,9 @@
             <div class="row my-2">
               <div class="col-12 col-xl-4"><label class="form-label">Mot de passe *</label></div>
               <div class="col">
-                <input type="password" th:field="*{motDePasse}" required minlength="3" maxlength="30"
+                <input type="password" th:field="*{motDePasse}" required minlength="8" maxlength="30"
                   class="form-control">
+                <small class="text-muted-nav">Au moins 8 caractères, avec une lettre et un chiffre.</small>
               </div>
             </div>
 
