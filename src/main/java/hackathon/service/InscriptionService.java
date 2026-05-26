@@ -56,6 +56,8 @@ public class InscriptionService {
 		if ( !compteRepository.verifierUniciteEmail( f.getEmail(), null ) ) {
 			throw new InscriptionException( "Cet e-mail est déjà utilisé" );
 		}
+
+		// Politique de mot de passe : au moins 8 caractères, une lettre et un chiffre
 		String mdp = f.getMotDePasse();
 		if ( blank( mdp ) ) {
 			throw new InscriptionException( "Le mot de passe est obligatoire" );
@@ -66,16 +68,17 @@ public class InscriptionService {
 		if ( !mdp.matches( ".*[A-Za-zÀ-ÿ].*" ) || !mdp.matches( ".*[0-9].*" ) ) {
 			throw new InscriptionException( "Le mot de passe doit contenir au moins une lettre et un chiffre" );
 		}
+
 		if ( blank( f.getRole() ) ) {
 			throw new InscriptionException( "Choisissez un type de compte" );
 		}
 
-		// 2) Création du compte
+		// 2) Création du compte (mot de passe haché, rôle non-admin)
 		Compte c = new Compte();
 		c.setPseudo( f.getPseudo() );
 		c.setEmail( f.getEmail() );
 		c.setRoleAdmin( false );
-		c.setEmpreinteMdp( encoder.encode( f.getMotDePasse() ) );
+		c.setEmpreinteMdp( encoder.encode( mdp ) );
 		c = compteRepository.save( c );
 		Long idCompte = c.getIdCompte();
 
@@ -212,4 +215,14 @@ public class InscriptionService {
 		for ( int essai = 0; essai < 25; essai++ ) {
 			StringBuilder sb = new StringBuilder();
 			for ( int i = 0; i < 6; i++ ) {
-				sb.append( chars.charAt( r.nextInt( cha
+				sb.append( chars.charAt( r.nextInt( chars.length() ) ) );
+			}
+			String code = sb.toString();
+			if ( equipeRepository.findByCodeEquipe( code ) == null ) {
+				return code;
+			}
+		}
+		return "EQ" + ( System.currentTimeMillis() % 100000 );
+	}
+
+}
