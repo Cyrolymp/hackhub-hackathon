@@ -6,7 +6,22 @@ Projet réalisé dans le cadre d'un module de développement d'application (trav
 
 ## Aperçu
 
-> _Captures d'écran à ajouter : page d'accueil, liste des hackathons, tableau de bord, page de notation, page de détail._
+<!--
+  Pour afficher des captures, deux options :
+  A) Sur GitHub : ouvrir README.md > bouton crayon (Edit) > placer le curseur ici >
+     glisser-déposer l'image dans l'éditeur. GitHub l'upload et insère le lien tout seul.
+  B) En local : créer un dossier "screenshots/", y mettre les images, puis décommenter
+     les lignes ci-dessous (adapter les noms de fichiers).
+-->
+
+<!--
+![Page d'accueil](screenshots/accueil.png)
+![Liste des hackathons](screenshots/hackathons.png)
+![Tableau de bord](screenshots/dashboard.png)
+![Notation](screenshots/notation.png)
+-->
+
+> _Captures à ajouter : page d'accueil, liste des hackathons, tableau de bord, page de notation._
 
 ## Stack technique
 
@@ -48,47 +63,62 @@ src/main/resources/
 ## Lancer le projet en local
 
 ### Prérequis
+
 - Java 21
 - PostgreSQL
 - Le wrapper Gradle est inclus (`./gradlew`)
 
 ### 1. Créer la base de données
+
 ```sql
 CREATE DATABASE hackathon;
 ```
 
 ### 2. Configurer l'accès
+
 Copier le fichier d'exemple puis adapter les identifiants :
+
 ```bash
 cp src/main/resources/application.properties.example src/main/resources/application.properties
 ```
 
 ### 3. Charger le schéma et les données de démo
+
 Le schéma, les procédures et les données de test sont chargés via le test `Init_DB` :
+
 - depuis l'IDE : exécuter `src/test/java/hackathon/db/Init_DB.java` en test JUnit,
 - ou exécuter manuellement, dans l'ordre, les scripts de `src/main/resources/db/sql/` : `1-tables.sql`, `2-procedures.sql`, `3-data.sql`.
 
 ### 4. Démarrer l'application
+
 ```bash
 ./gradlew bootRun
 ```
+
 Application accessible sur **http://localhost:8089**.
 
 ## Comptes de démonstration
 
 Mot de passe commun : **`HackHub@2026`** (connexion possible par identifiant ou e-mail).
 
-| Rôle | Identifiants |
-|---|---|
-| Admin | `admin` |
-| Organisateur | `marie`, `paul` |
-| Juge | `sophie`, `marc`, `lina` |
-| Participant | `max`, `mika`, `tom`, `eva` |
-| Partenaire | `techcorp`, `datasoft` |
-| Mentor | `alex`, `nina` |
+| Rôle         | Identifiants                |
+| ------------ | --------------------------- |
+| Admin        | `admin`                     |
+| Organisateur | `marie`, `paul`             |
+| Juge         | `sophie`, `marc`, `lina`    |
+| Participant  | `max`, `mika`, `tom`, `eva` |
+| Partenaire   | `techcorp`, `datasoft`      |
+| Mentor       | `alex`, `nina`              |
 
 ## Auteur
 
-Backend développé par **Cyril** — modèle de données, repositories, services, contrôleurs, Spring Security multi-rôles, validation et logique métier (inscription, équipes, notation, classement).
+Backend développé par **Cyril Tuekam** — modèle de données, repositories, services, contrôleurs, Spring Security multi-rôles, validation et logique métier (inscription, équipes, notation, classement).
+
+- GitHub : [https://github.com/Cyrolymp](https://github.com/Cyrolymp)
+- LinkedIn : [https://www.linkedin.com/in/TON-PROFIL](https://www.linkedin.com/in/cyril-tuekam-8a5584205)
 
 > Projet d'équipe : la base de données et le front-end ont été pris en charge par d'autres membres du groupe.
+
+## Licence
+
+Ce projet est distribué sous licence **MIT** — voir le fichier [LICENSE](LICENSE).
