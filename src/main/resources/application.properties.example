@@ -1,0 +1,32 @@
+# =============================================================
+#  Exemple de configuration.
+#  Copiez ce fichier en "application.properties" et adaptez les
+#  valeurs (notamment l'accès à la base) à votre machine :
+#
+#     cp application.properties.example application.properties
+#
+#  Le vrai fichier application.properties est ignoré par Git
+#  (voir .gitignore) afin de ne pas versionner d'identifiants.
+# =============================================================
+
+spring.application.name=hackathon
+server.port=8089
+
+# Thymeleaf : rechargement des templates sans redemarrage (dev)
+spring.thymeleaf.cache=false
+
+# Actuator (dev)
+management.endpoints.web.exposure.include=*
+
+# DevTools (rechargement a chaud)
+spring.devtools.restart.enabled=true
+spring.devtools.livereload.enabled=true
+spring.devtools.restart.additional-exclude=db/**
+
+# Base de donnees PostgreSQL : adaptez l'URL et les identifiants
+spring.datasource.url=jdbc:postgresql://localhost:5432/hackathon
+spring.datasource.username=postgres
+spring.datasource.password=VOTRE_MOT_DE_PASSE
+
+# Les scripts SQL sont charges via le test Init_DB (pas au demarrage)
+spring.sql.init.mode=never
