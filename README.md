@@ -6,22 +6,10 @@ Projet réalisé dans le cadre d'un module de développement d'application (trav
 
 ## Aperçu
 
-<!--
-  Pour afficher des captures, deux options :
-  A) Sur GitHub : ouvrir README.md > bouton crayon (Edit) > placer le curseur ici >
-     glisser-déposer l'image dans l'éditeur. GitHub l'upload et insère le lien tout seul.
-  B) En local : créer un dossier "screenshots/", y mettre les images, puis décommenter
-     les lignes ci-dessous (adapter les noms de fichiers).
--->
-
-<!--
 ![Page d'accueil](screenshots/accueil.png)
 ![Liste des hackathons](screenshots/hackathons.png)
 ![Tableau de bord](screenshots/dashboard.png)
 ![Notation](screenshots/notation.png)
--->
-
-> _Captures à ajouter : page d'accueil, liste des hackathons, tableau de bord, page de notation._
 
 ## Stack technique
 
@@ -115,7 +103,7 @@ Mot de passe commun : **`HackHub@2026`** (connexion possible par identifiant ou 
 Backend développé par **Cyril Tuekam** — modèle de données, repositories, services, contrôleurs, Spring Security multi-rôles, validation et logique métier (inscription, équipes, notation, classement).
 
 - GitHub : [https://github.com/Cyrolymp](https://github.com/Cyrolymp)
-- LinkedIn : [https://www.linkedin.com/in/TON-PROFIL](https://www.linkedin.com/in/cyril-tuekam-8a5584205)
+- LinkedIn : [https://www.linkedin.com/in/tuekam-8a5584205](https://www.linkedin.com/in/cyril-tuekam-8a5584205)
 
 > Projet d'équipe : la base de données et le front-end ont été pris en charge par d'autres membres du groupe.
 
