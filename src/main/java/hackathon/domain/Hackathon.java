@@ -35,7 +35,10 @@ public class Hackathon {
 	@NotNull( message = "L'heure de début est obligatoire" )
 	private LocalTime	heureDeb;
 
+	@NotNull( message = "La date de début est obligatoire" )
 	private LocalDate	dateDeb;
+
+	@NotNull( message = "La date de fin est obligatoire" )
 	private LocalDate	dateFin;
 
 	@NotBlank( message = "Le lieu est obligatoire" )

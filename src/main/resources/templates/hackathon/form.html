@@ -56,20 +56,20 @@
 
               <div class="row my-3">
                 <div class="col-12 col-xl-4">
-                  <label class="col-form-label">Date de début</label>
+                  <label class="col-form-label">Date de début *</label>
                 </div>
                 <div class="col">
-                  <input type="date" th:field="*{dateDeb}" class="form-control">
+                  <input type="date" th:field="*{dateDeb}" required class="form-control">
                   <div th:errors="*{dateDeb}" class="text-danger"></div>
                 </div>
               </div>
 
               <div class="row my-3">
                 <div class="col-12 col-xl-4">
-                  <label class="col-form-label">Date de fin</label>
+                  <label class="col-form-label">Date de fin *</label>
                 </div>
                 <div class="col">
-                  <input type="date" th:field="*{dateFin}" class="form-control">
+                  <input type="date" th:field="*{dateFin}" required class="form-control">
                   <div th:errors="*{dateFin}" class="text-danger"></div>
                 </div>
               </div>
@@ -96,10 +96,14 @@
 
               <div class="row my-3">
                 <div class="col-12 col-xl-4">
-                  <label class="col-form-label">ID Organisateur *</label>
+                  <label class="col-form-label">Organisateur *</label>
                 </div>
                 <div class="col">
-                  <input type="number" th:field="*{idOrganisateur}" required class="form-control">
+                  <select th:field="*{idOrganisateur}" required class="form-select">
+                    <option value="">-- Choisir --</option>
+                    <option th:each="o : ${organisateurs}" th:value="${o.idOrganisateur}"
+                      th:text="${o.nomOrg}"></option>
+                  </select>
                   <div th:errors="*{idOrganisateur}" class="text-danger"></div>
                 </div>
               </div>

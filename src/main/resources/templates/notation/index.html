@@ -21,7 +21,12 @@
           <form th:action="@{/notation}" method="post" class="row g-2 align-items-end">
             <div class="col-12 col-md-4">
               <label class="form-label">Juge</label>
-              <select name="idJuge" class="form-select" required>
+              <!-- Si l'utilisateur est un juge : c'est lui, pas de choix possible -->
+              <div th:if="${currentJuge != null}">
+                <div class="form-control-plaintext fw-semibold" th:text="${currentJuge.nomJuge}">Nom du juge</div>
+              </div>
+              <!-- Sinon (admin sans profil juge) : on propose le choix -->
+              <select th:if="${currentJuge == null}" name="idJuge" class="form-select" required>
                 <option value="">-- Choisir --</option>
                 <option th:each="j : ${juges}" th:value="${j.idJuge}" th:text="${j.nomJuge}"></option>
               </select>

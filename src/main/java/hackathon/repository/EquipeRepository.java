@@ -18,4 +18,6 @@ public interface EquipeRepository
 
 	Equipe findByCodeEquipe( String codeEquipe );
 
+	long countByIdEpreuve( Long idEpreuve );
+
 }

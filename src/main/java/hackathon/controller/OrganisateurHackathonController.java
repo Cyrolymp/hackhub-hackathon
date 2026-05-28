@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hackathon.domain.OrganisateurHackathon;
+import hackathon.repository.CompteRepository;
 import hackathon.service.OrganisateurHackathonService;
 import hackathon.util.Alert;
 import hackathon.util.Paging;
@@ -25,7 +26,8 @@ import lombok.RequiredArgsConstructor;
 @SessionAttributes( "pagingOrganisateurHackathon" )
 public class OrganisateurHackathonController {
 
-	private final OrganisateurHackathonService organisateurHackathonService;
+	private final OrganisateurHackathonService	organisateurHackathonService;
+	private final CompteRepository				compteRepository;
 
 	@ModelAttribute
 	public Paging getPaging( @ModelAttribute( "pagingOrganisateurHackathon" ) Paging paging ) {
@@ -71,6 +73,7 @@ public class OrganisateurHackathonController {
 
 	private String buildPageForm( OrganisateurHackathon item, Model model ) {
 		model.addAttribute( "item", item );
+		model.addAttribute( "comptes", compteRepository.findAll() );
 		return "organisateur/form.html";
 	}
 

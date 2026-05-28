@@ -34,7 +34,7 @@
             <span class="status-badge status-ouvert"><i class="bi bi-unlock-fill"></i> Inscriptions ouvertes</span>
             <div class="d-flex gap-2 mt-2">
               <a th:href="@{/hackathons/{id}(id=${h.idHack})}" class="btn btn-outline-light btn-sm flex-fill">Détail</a>
-              <a th:href="@{/inscription}" class="btn btn-primary btn-sm flex-fill">
+              <a sec:authorize="isAnonymous()" th:href="@{/inscription}" class="btn btn-primary btn-sm flex-fill">
                 <i class="bi bi-person-plus-fill"></i> Participer</a>
             </div>
           </div>

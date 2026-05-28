@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hackathon.domain.Juge;
+import hackathon.repository.CompteRepository;
 import hackathon.service.JugeService;
 import hackathon.util.Alert;
 import hackathon.util.Paging;
@@ -25,7 +26,8 @@ import lombok.RequiredArgsConstructor;
 @SessionAttributes( "pagingJuge" )
 public class JugeController {
 
-	private final JugeService jugeService;
+	private final JugeService		jugeService;
+	private final CompteRepository	compteRepository;
 
 	@ModelAttribute
 	public Paging getPaging( @ModelAttribute( "pagingJuge" ) Paging paging ) {
@@ -71,6 +73,7 @@ public class JugeController {
 
 	private String buildPageForm( Juge item, Model model ) {
 		model.addAttribute( "item", item );
+		model.addAttribute( "comptes", compteRepository.findAll() );
 		return "juge/form.html";
 	}
 

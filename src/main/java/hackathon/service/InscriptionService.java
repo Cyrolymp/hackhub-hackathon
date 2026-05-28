@@ -15,6 +15,7 @@ import hackathon.domain.Partenaire;
 import hackathon.domain.Participant;
 import hackathon.dto.InscriptionForm;
 import hackathon.repository.CompteRepository;
+import hackathon.repository.EpreuveRepository;
 import hackathon.repository.EquipeRepository;
 import hackathon.repository.JugeRepository;
 import hackathon.repository.MentorRepository;
@@ -30,6 +31,7 @@ public class InscriptionService {
 	private final CompteRepository					compteRepository;
 	private final ParticipantRepository				participantRepository;
 	private final EquipeRepository					equipeRepository;
+	private final EpreuveRepository					epreuveRepository;
 	private final JugeRepository					jugeRepository;
 	private final OrganisateurHackathonRepository	organisateurRepository;
 	private final PartenaireRepository				partenaireRepository;
@@ -138,6 +140,13 @@ public class InscriptionService {
 					}
 					if ( idEpreuve == null ) {
 						throw new InscriptionException( "Choisissez une épreuve pour votre équipe" );
+					}
+					// Contrôle de capacité de l'épreuve
+					var epreuve = epreuveRepository.findById( idEpreuve ).orElse( null );
+					if ( epreuve != null && epreuve.getNbrMaxEquipe() != null
+							&& equipeRepository.countByIdEpreuve( idEpreuve ) >= epreuve.getNbrMaxEquipe() ) {
+						throw new InscriptionException( "Cette épreuve a atteint sa capacité maximale ("
+								+ epreuve.getNbrMaxEquipe() + " équipes)" );
 					}
 					Equipe eq = new Equipe();
 					eq.setNomEquipe( f.getNomEquipe() );

@@ -56,10 +56,14 @@
 
               <div class="row my-3">
                 <div class="col-12 col-xl-4">
-                  <label class="col-form-label">ID Compte</label>
+                  <label class="col-form-label">Compte associé</label>
                 </div>
                 <div class="col">
-                  <input type="number" th:field="*{idCompte}" class="form-control">
+                  <select th:field="*{idCompte}" class="form-select">
+                    <option value="">-- Aucun --</option>
+                    <option th:each="c : ${comptes}" th:value="${c.idCompte}"
+                      th:text="${c.pseudo + ' (' + c.email + ')'}"></option>
+                  </select>
                   <div th:errors="*{idCompte}" class="text-danger"></div>
                 </div>
               </div>

@@ -356,5 +356,6 @@ a.text-secondary:hover { color:var(--hh-primary) !important; }
   margin:1.5rem 0 0.75rem; display:flex; align-items:center; gap:8px; }
 .section-heading i { color:var(--primary); }
 
-/* Entrée animée en cascade (délai défini en ligne) */
-.anim-in { animation: fadeInUp .5s ease both; }
+/* Entrée animée en cascade : gérée par GSAP (voir layout :: bottom-scripts).
+   Si GSAP est indisponible (hors-ligne), les cartes restent simplement visibles. */
+.anim-in { }

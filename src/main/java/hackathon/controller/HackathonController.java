@@ -1,5 +1,7 @@
 package hackathon.controller;
 
+import java.time.LocalDate;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hackathon.domain.Hackathon;
+import hackathon.repository.OrganisateurHackathonRepository;
 import hackathon.service.HackathonService;
 import hackathon.util.Alert;
 import hackathon.util.Paging;
@@ -25,7 +28,8 @@ import lombok.RequiredArgsConstructor;
 @SessionAttributes( "pagingHackathon" )
 public class HackathonController {
 
-	private final HackathonService hackathonService;
+	private final HackathonService					hackathonService;
+	private final OrganisateurHackathonRepository	organisateurRepository;
 
 	@ModelAttribute
 	public Paging getPaging( @ModelAttribute( "pagingHackathon" ) Paging paging ) {
@@ -61,6 +65,16 @@ public class HackathonController {
 	@PostMapping( "/form" )
 	public String save( @Valid @ModelAttribute( "item" ) Hackathon item, BindingResult result,
 			Model model, RedirectAttributes ra ) {
+
+		// Règles métier sur les dates
+		if ( item.getDateDeb() != null && item.getDateDeb().isBefore( LocalDate.now() ) ) {
+			result.rejectValue( "dateDeb", "", "La date de début ne peut pas être dans le passé" );
+		}
+		if ( item.getDateDeb() != null && item.getDateFin() != null
+				&& item.getDateFin().isBefore( item.getDateDeb() ) ) {
+			result.rejectValue( "dateFin", "", "La date de fin ne peut pas précéder la date de début" );
+		}
+
 		if ( result.hasErrors() ) {
 			return buildPageForm( item, model );
 		}
@@ -71,6 +85,7 @@ public class HackathonController {
 
 	private String buildPageForm( Hackathon item, Model model ) {
 		model.addAttribute( "item", item );
+		model.addAttribute( "organisateurs", organisateurRepository.findAll() );
 		return "hackathon/form.html";
 	}
 

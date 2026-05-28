@@ -1,5 +1,7 @@
 package hackathon.controller;
 
+import java.security.Principal;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +33,13 @@ public class InscriptionController {
 
 	// Affiche le formulaire
 	@GetMapping( "/inscription" )
-	public String form( Model model ) {
+	public String form( Model model, Principal principal, RedirectAttributes ra ) {
+		// Un utilisateur déjà connecté n'a pas à se réinscrire
+		if ( principal != null ) {
+			ra.addFlashAttribute( "alert",
+					new Alert( Alert.Color.INFO, "Vous êtes déjà connecté·e." ) );
+			return "redirect:/";
+		}
 		if ( !model.containsAttribute( "form" ) ) {
 			var f = new InscriptionForm();
 			f.setRole( "PARTICIPANT" );
@@ -44,7 +52,12 @@ public class InscriptionController {
 
 	// Traite l'inscription
 	@PostMapping( "/inscription" )
-	public String register( @ModelAttribute( "form" ) InscriptionForm form, Model model, RedirectAttributes ra ) {
+	public String register( @ModelAttribute( "form" ) InscriptionForm form, Model model, Principal principal,
+			RedirectAttributes ra ) {
+		// Blocage : impossible de s'inscrire si déjà connecté
+		if ( principal != null ) {
+			return "redirect:/";
+		}
 		try {
 			String msg = inscriptionService.inscrire( form );
 			ra.addFlashAttribute( "alert", new Alert( Alert.Color.SUCCESS, msg ) );

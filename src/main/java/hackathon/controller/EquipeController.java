@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import hackathon.domain.Epreuve;
 import hackathon.domain.Equipe;
+import hackathon.repository.EpreuveRepository;
+import hackathon.repository.EquipeRepository;
+import hackathon.repository.HackathonRepository;
 import hackathon.service.EquipeService;
 import hackathon.util.Alert;
 import hackathon.util.Paging;
@@ -25,7 +29,10 @@ import lombok.RequiredArgsConstructor;
 @SessionAttributes( "pagingEquipe" )
 public class EquipeController {
 
-	private final EquipeService equipeService;
+	private final EquipeService			equipeService;
+	private final EquipeRepository		equipeRepository;
+	private final HackathonRepository	hackathonRepository;
+	private final EpreuveRepository		epreuveRepository;
 
 	@ModelAttribute
 	public Paging getPaging( @ModelAttribute( "pagingEquipe" ) Paging paging ) {
@@ -61,6 +68,21 @@ public class EquipeController {
 	@PostMapping( "/form" )
 	public String save( @Valid @ModelAttribute( "item" ) Equipe item, BindingResult result,
 			Model model, RedirectAttributes ra ) {
+
+		// Contrôle de capacité : si on crée une nouvelle équipe sur cette épreuve,
+		// on refuse si le nombre max d'équipes est atteint.
+		if ( item.getIdEquipe() == null && item.getIdEpreuve() != null ) {
+			Epreuve epreuve = epreuveRepository.findById( item.getIdEpreuve() ).orElse( null );
+			if ( epreuve != null && epreuve.getNbrMaxEquipe() != null ) {
+				long deja = equipeRepository.countByIdEpreuve( item.getIdEpreuve() );
+				if ( deja >= epreuve.getNbrMaxEquipe() ) {
+					result.rejectValue( "idEpreuve", "",
+							"Cette épreuve a atteint sa capacité maximale ("
+									+ epreuve.getNbrMaxEquipe() + " équipes)." );
+				}
+			}
+		}
+
 		if ( result.hasErrors() ) {
 			return buildPageForm( item, model );
 		}
@@ -71,6 +93,8 @@ public class EquipeController {
 
 	private String buildPageForm( Equipe item, Model model ) {
 		model.addAttribute( "item", item );
+		model.addAttribute( "hackathons", hackathonRepository.findAll() );
+		model.addAttribute( "epreuves", epreuveRepository.findAll() );
 		return "equipe/form.html";
 	}
 

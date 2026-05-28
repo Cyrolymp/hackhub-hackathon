@@ -56,20 +56,26 @@
 
               <div class="row my-3">
                 <div class="col-12 col-xl-4">
-                  <label class="col-form-label">ID Hackathon *</label>
+                  <label class="col-form-label">Hackathon *</label>
                 </div>
                 <div class="col">
-                  <input type="number" th:field="*{idHack}" required class="form-control">
+                  <select th:field="*{idHack}" required class="form-select">
+                    <option value="">-- Choisir --</option>
+                    <option th:each="h : ${hackathons}" th:value="${h.idHack}" th:text="${h.nomHack}"></option>
+                  </select>
                   <div th:errors="*{idHack}" class="text-danger"></div>
                 </div>
               </div>
 
               <div class="row my-3">
                 <div class="col-12 col-xl-4">
-                  <label class="col-form-label">ID Épreuve *</label>
+                  <label class="col-form-label">Épreuve *</label>
                 </div>
                 <div class="col">
-                  <input type="number" th:field="*{idEpreuve}" required class="form-control">
+                  <select th:field="*{idEpreuve}" required class="form-select">
+                    <option value="">-- Choisir --</option>
+                    <option th:each="e : ${epreuves}" th:value="${e.idEpreuve}" th:text="${e.nomEpreuve}"></option>
+                  </select>
                   <div th:errors="*{idEpreuve}" class="text-danger"></div>
                 </div>
               </div>

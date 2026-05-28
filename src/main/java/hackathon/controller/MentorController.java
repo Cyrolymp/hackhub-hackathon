@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hackathon.domain.Mentor;
+import hackathon.repository.CompteRepository;
 import hackathon.service.MentorService;
 import hackathon.util.Alert;
 import hackathon.util.Paging;
@@ -25,7 +26,8 @@ import lombok.RequiredArgsConstructor;
 @SessionAttributes( "pagingMentor" )
 public class MentorController {
 
-	private final MentorService mentorService;
+	private final MentorService		mentorService;
+	private final CompteRepository	compteRepository;
 
 	@ModelAttribute
 	public Paging getPaging( @ModelAttribute( "pagingMentor" ) Paging paging ) {
@@ -71,6 +73,7 @@ public class MentorController {
 
 	private String buildPageForm( Mentor item, Model model ) {
 		model.addAttribute( "item", item );
+		model.addAttribute( "comptes", compteRepository.findAll() );
 		return "mentor/form.html";
 	}
 

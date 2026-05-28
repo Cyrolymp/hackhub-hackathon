@@ -14,4 +14,6 @@ public interface JugeRepository
 
 	boolean existsByIdCompte( Long idCompte );
 
+	Juge findByIdCompte( Long idCompte );
+
 }
