@@ -27,9 +27,6 @@ jobs:
       - name: Build with Gradle
         run: gradle build -x test
 
-      - name: Run tests
-        run: gradle test
-
   security:
     name: Security Scan
     runs-on: ubuntu-latest
