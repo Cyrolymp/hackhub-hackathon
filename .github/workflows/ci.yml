@@ -21,11 +21,14 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
       - name: Build with Gradle
-        run: ./gradlew build -x test
+        run: gradle build -x test
 
       - name: Run tests
-        run: ./gradlew test
+        run: gradle test
 
   security:
     name: Security Scan
